@@ -1,0 +1,66 @@
+{{#itemsCount}}
+<div id="home-featured-products-section" class="pb-4">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 px-0 px-lg-3">
+        <div class="border-top border-placeholder pb-8"></div>
+      </div>
+      <div class="col-lg-12 text-center">
+        <h2 class="font-weight-extrabold fs-20 fs-lg-26 mb-5 text-dark">
+          منتجات مميزة
+        </h2>
+      </div>
+    </div>
+    <div class="row">
+      {{#items}}
+      <div class="col-lg-3 col-sm-6 py-2">
+        <div
+          class="align-items-start d-flex flex-column h-100 mb-6 mb-lg-0 product px-5 px-lg-0 pb-4"
+          data-product-id="{{id}}"
+          data-image="{{file_full_path}}"
+          data-price="{{final_price_number}}"
+          data-name="{{name}}"
+        >
+          <a
+            href="/contents/product_view/{{id}}"
+            class="text-decoration-none text-primary text-hover-black"
+          >
+            <img
+              src="{{file_full_path}}"
+              width="260"
+              height="180"
+              alt=""
+              class="product-img-sm img-fluid w-100 h-180px mx-auto img-cover mb-3"
+            />
+            <h6 class="fs-18 font-weight-bold mb-2">
+              {{ name }}<span class="font-weight-medium fs-16 text-body ml-2"
+                >#{{id}}</span
+              >
+            </h6>
+          </a>
+          <p class="fs-16 fs-md-14 fs-xl-16 font-weight-medium text-body mb-3">
+            {{description}}
+          </p>
+          <!-- <div class="mb-3 font-weight-bold mt-auto">
+            {{#discount}}
+            <span class="text-black fs-24">{{final_price}}</span>
+            <del class="text-danger"
+              ><span class="text-alto fs-14 mr-2">{{unit_price}}</span></del
+            >
+            {{/discount}} {{^discount}}
+            <span class="text-black fs-24">{{final_price}}</span>
+            {{/discount}}
+          </div>
+          <button
+            data-name="{{name}}"
+            class="add-to-cart-btn btn btn-sm btn-primary text-uppercase font-weight-medium fs-16"
+          >
+            <i class="fal fa-cart-plus mr-2"></i>اضف الي العربة
+          </button> -->
+        </div>
+      </div>
+      {{/items}}
+    </div>
+  </div>
+  {{/itemsCount}}
+</div>
