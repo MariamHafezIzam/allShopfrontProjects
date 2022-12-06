@@ -30,12 +30,8 @@
 
     const productCatsData = async () => {
       let allProducts = $(".box");
-
-      //   allProducts.hide();
-      // console.log(allProducts);
       $.each(allProducts, async (i, val) => {
         let productId = $(val).find(".product").data("product-id");
-        //   console.log(productId);
         let apiKey = "0e71fa8cc7c925e519731516ff4433792f32d493";
 
         $.ajax({
@@ -58,8 +54,6 @@
               cat = 0;
             }
           }
-          // console.log(cat, barcode);
-
           //  console.log(cat, barcode);
 
           $(val).attr("data-cat", cat);
@@ -67,38 +61,14 @@
         });
       });
     };
-    $(function () {
-      $.ajax({
-        url: "/contents/products_list?cat_id=142",
-        type: "get",
-        success: function (resp) {
-          $("#main-content-products").html(
-            $(resp).find("#products-section .row:nth-last-child(2)")
-          );
-        },
-      })
-        .done(() => {
-          $(".box").addClass("hidden");
 
-          let checkBox = $(".box");
-          $.each(checkBox, async (i, val) => {
-            $(val).on("click", function () {
-              if ($(val).find("input:checkbox").prop("checked")) {
-                $(val).find("div").addClass("active");
-              } else {
-                $(val).find("div").removeClass("active");
-              }
-            });
-          });
-        })
-        .done(() => {
-          $.get("/v2/api/entity/le_all_cats/1", (data) => {
-            let allCats = data["le_all_cats_le_all_cats_cat_details"].map(
-              (val) => {
-                let catName = val.cat_name;
-                let catID = val.cat;
-                let catImgUrl = val.img_link;
-                let div = `    <div class="col-lg-4 col-sm-6 py-2 px-4">
+    $(function () {
+      $.get("/v2/api/entity/le_all_cats/1", (data) => {
+        let allCats = data["le_all_cats_le_all_cats_cat_details"].map((val) => {
+          let catName = val.cat_name;
+          let catID = val.cat;
+          let catImgUrl = val.img_link;
+          let div = `    <div class="col-lg-4 col-sm-6 py-2 px-4">
       <div class="item hover bg-white p-4 cat-box" data-cat-id="${catID}">
         <div class="h-100 mb-6 mb-lg-0 bg-white px-5 px-lg-0">
           <h1 class="fs-20 text-center font-weight-semibold py-3 bg-white">
@@ -112,10 +82,36 @@
         </div>
       </div>
     </div>`;
-                $("#new-elm .row").append(div);
-              }
-            );
-          });
+          $("#new-elm .row").append(div);
+        });
+      })
+        .done(() => {
+          $.ajax({
+            url: "/contents/products_list?cat_id=142",
+            type: "get",
+            success: function (resp) {
+              $("#main-content-products").html(
+                $(resp).find("#products-section .row:nth-last-child(2)")
+              );
+            },
+          })
+            .done(() => {
+              productCatsData();
+            })
+            .done(() => {
+              $(".box").addClass("hidden");
+
+              let checkBox = $(".box");
+              $.each(checkBox, async (i, val) => {
+                $(val).on("click", function () {
+                  if ($(val).find("input:checkbox").prop("checked")) {
+                    $(val).find("div").addClass("active");
+                  } else {
+                    $(val).find("div").removeClass("active");
+                  }
+                });
+              });
+            });
         })
         .done(() => {
           //  let card = $(".cat-box")
@@ -123,7 +119,6 @@
             let catId = $(this).data("cat-id");
             let allProducts = $(".box");
             $.each(allProducts, async (i, val) => {
-              console.log(allProducts);
               let productCatId = $(val).data("cat");
               if (catId == productCatId) {
                 console.log(catId, productCatId);
@@ -144,8 +139,6 @@
 
       return false;
     });
-    setTimeout(() => {
-      productCatsData();
-    }, 4000);
+    setTimeout(() => {}, 2000);
   });
 </script>
