@@ -1,0 +1,151 @@
+<style>
+  .cat-box {
+    border-radius: 5px;
+    transition: 0.3s;
+    color: #2d1e16;
+    background: #fff !important;
+    cursor: pointer;
+  }
+  .img-cat {
+    width: 200px;
+    height: 300px !important;
+    border-radius: 5px;
+  }
+</style>
+<div id="new-elm">
+  <div class="row"></div>
+</div>
+<div class="pro-con bg-white d-none">
+  <div class="close-btn fs-20 px-4 py-2 font-weight-bold text-left col-12">
+    <button class="btn text-color fs-24 p-0 font-weight-semibold">x</button>
+  </div>
+  <div id="main-content-products" class="p-4"></div>
+</div>
+<script>
+  $(document).ready(function () {
+    const url = window.location.href;
+    url.includes("process_content/products_custom")
+      ? $("footer#site-footer, #site-header").hide()
+      : null;
+
+    const productCatsData = async () => {
+      let allProducts = $(".box");
+
+      //   allProducts.hide();
+      // console.log(allProducts);
+      $.each(allProducts, async (i, val) => {
+        let productId = $(val).find(".product").data("product-id");
+        //   console.log(productId);
+        let apiKey = "0e71fa8cc7c925e519731516ff4433792f32d493";
+
+        $.ajax({
+          type: "GET",
+          url: "/v2/api/entity/product/" + productId,
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            APIKEY: apiKey,
+          },
+          credentials: "same-origin",
+          contentType: "application/json",
+        }).done((data) => {
+          let $thisProd = data;
+          let cat = $thisProd.items_categories[0].category_id;
+          let barcode = $thisProd.barcode;
+          if (cat == "142" || cat == undefined || cat == "") {
+            cat = $thisProd.items_categories[1].category_id;
+            if (cat == "" || cat == undefined) {
+              cat = 0;
+            }
+          }
+          // console.log(cat, barcode);
+
+          //  console.log(cat, barcode);
+
+          $(val).attr("data-cat", cat);
+          $(val).attr("data-barcode", barcode);
+        });
+      });
+    };
+    $(function () {
+      $.ajax({
+        url: "/contents/products_list?cat_id=142",
+        type: "get",
+        success: function (resp) {
+          $("#main-content-products").html(
+            $(resp).find("#products-section .row:nth-last-child(2)")
+          );
+        },
+      })
+        .done(() => {
+          $(".box").addClass("hidden");
+
+          let checkBox = $(".box");
+          $.each(checkBox, async (i, val) => {
+            $(val).on("click", function () {
+              if ($(val).find("input:checkbox").prop("checked")) {
+                $(val).find("div").addClass("active");
+              } else {
+                $(val).find("div").removeClass("active");
+              }
+            });
+          });
+        })
+        .done(() => {
+          $.get("/v2/api/entity/le_all_cats/1", (data) => {
+            let allCats = data["le_all_cats_le_all_cats_cat_details"].map(
+              (val) => {
+                let catName = val.cat_name;
+                let catID = val.cat;
+                let catImgUrl = val.img_link;
+                let div = `    <div class="col-lg-4 col-sm-6 py-2 px-4">
+      <div class="item hover bg-white p-4 cat-box" data-cat-id="${catID}">
+        <div class="h-100 mb-6 mb-lg-0 bg-white px-5 px-lg-0">
+          <h1 class="fs-20 text-center font-weight-semibold py-3 bg-white">
+            ${catName}
+          </h1>
+          <img
+            class="img-cat mx-auto img-cover product-img-lg"
+            src="${catImgUrl}"
+            alt=""
+          />
+        </div>
+      </div>
+    </div>`;
+                $("#new-elm .row").append(div);
+              }
+            );
+          });
+        })
+        .done(() => {
+          //  let card = $(".cat-box")
+          $(".cat-box").on("click", function () {
+            let catId = $(this).data("cat-id");
+            let allProducts = $(".box");
+            $.each(allProducts, async (i, val) => {
+              console.log(allProducts);
+              let productCatId = $(val).data("cat");
+              if (catId == productCatId) {
+                console.log(catId, productCatId);
+                $(val).removeClass("hidden");
+                $("#new-elm").addClass("hidden");
+                $(".pro-con").removeClass("d-none");
+              }
+            });
+          });
+        })
+        .done(() => {
+          $(".close-btn").on("click", function () {
+            $("#new-elm").removeClass("hidden");
+            $(".box").addClass("hidden");
+            $(".pro-con").addClass("d-none");
+          });
+        });
+
+      return false;
+    });
+    setTimeout(() => {
+      productCatsData();
+    }, 4000);
+  });
+</script>
