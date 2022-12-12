@@ -158,10 +158,10 @@
     <div class="row">
       {{#products}}
 
-      <div class="col-lg-3 col-sm-6 py-2 px-4 box">
+      <div class="col-lg-3 col-sm-4 py-2 px-4 box">
         <div class="item hover bg-white p-2">
           <div
-            class="h-100 mb-6 mb-lg-0 product px-5 px-lg-0 pb-4"
+            class="h-100 mb-lg-0 pt-2 product px-lg-0"
             data-product-id="{{id}}"
             data-image="{{file_full_path}}"
             data-price="{{final_price_number}}"
@@ -185,13 +185,13 @@
                 />
               </a>
             </div>
-            <div class="pro-info pt-2">
+            <div class="pro-info pt-xl-2 pt-0">
               <a
                 href="/contents/product_view/{{id}}"
                 class="text-decoration-none text-hover-black"
               >
                 <h6
-                  class="fs-16 font-weight-medium name m-0 p-1"
+                  class="fs-xl-16 fs-14 font-weight-medium name m-0 p-1"
                   style="min-height: 48px; text-align: right"
                 >
                   {{ name }}<span
@@ -211,7 +211,7 @@
                 class="price-add mb-3 font-weight-bold mt-auto px-1 price-no"
               >
                 {{#discount}}
-                <span class="price fs-20">{{final_price}}</span>
+                <span class="price fs-14 fs-xl-20">{{final_price}}</span>
                 <del class="text-danger"
                   ><span
                     class="text-alto font-weight-extrabold fs-14 mr-2 discount"
@@ -220,7 +220,7 @@
                 >
 
                 {{/discount}} {{^discount}}
-                <span class="fs-20">{{final_price}}</span>
+                <span class="fs-14 fs-xl-20">{{final_price}}</span>
                 {{/discount}}
               </div>
             </div>
