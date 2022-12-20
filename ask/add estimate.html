@@ -1,0 +1,334 @@
+<!-- code_Invoices_owner_add_estimate -->
+
+<style>
+  .flaoting-div {
+    display: none;
+    z-index: 999999;
+
+    position: fixed;
+    width: 1200px;
+    height: 700px;
+    border-radius: 25px;
+    box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  span.close-window {
+    display: inline-block;
+    width: 100%;
+    background: #ddd;
+    padding: 5px;
+    font-size: 20px;
+    padding-right: 11px;
+  }
+
+  span.close-window:hover {
+    color: red;
+    cursor: pointer;
+  }
+
+  .flaoting-div iframe {
+    border: 0;
+  }
+
+  a#openFltWindow {
+    width: 100px;
+    height: 25px;
+    display: inline-block;
+    text-align: center;
+    line-height: 24px;
+    margin: 10px 0;
+    border-radius: 3px;
+  }
+
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 48px;
+    height: 23px;
+  }
+
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    width: 44px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+  }
+
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 15px;
+    width: 15px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+  }
+
+  input:checked + .slider {
+    background-color: #2196f3;
+  }
+
+  input:focus + .slider {
+    box-shadow: 0 0 1px #2196f3;
+  }
+
+  input:checked + .slider:before {
+    -webkit-transform: translateX(20px);
+    -ms-transform: translateX(20px);
+    transform: translateX(20px);
+  }
+
+  /* Rounded sliders */
+  .slider.round {
+    border-radius: 34px;
+  }
+
+  .slider.round:before {
+    border-radius: 50%;
+  }
+
+  .switch-btn {
+    display: inline-block;
+    margin-right: 25px;
+  }
+
+  .loading-overlay {
+    display: none;
+    background: #b3b3b36b;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    top: 0;
+  }
+
+  .loading-overlay-image-container {
+    width: 15%;
+    color: #fff;
+    text-align: center;
+    position: fixed;
+    z-index: 1001;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 15px;
+    height: 80px;
+    border-radius: 5px;
+  }
+
+  .loading-overlay-title {
+    font-size: 1em;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #fff;
+  }
+
+  .loading-overlay-image {
+    width: 20%;
+  }
+</style>
+<script>
+  $(document).ready(() => {
+    if (USER.branch_id != 1) {
+      // General Variables
+      let clientDataTitle;
+
+      // Create Element: Overlay Div for loading animation
+
+      const overlay = `<div class="loading-overlay">
+<div class="loading-overlay-image-container">
+<img class="loading-overlay-image" src="https://yam9922.daftra.com/files/a6bac4d0/logos/6390460ba999d_blobid1670399497453.gif">
+</div>
+<div class="loading-overlay-title"></div>
+</div>`;
+
+      // Create Elemenet: Toogle Swicth Button
+      const toggleSwitch = `<div class="switch-btn">
+    <span style="display:block; margin-bottom:10px"> هل هو عقد؟ </span>
+<label class="switch" style="display:block;">
+<input type="checkbox" id="is_contract">
+<span style="display:inline-block; padding-top:20px" class="slider round"></span>
+</label>
+    </div>`;
+
+      // Create Element: PopUp Window Button
+      const specsButton = `<span class="new-btn"><a href="#" class=" rounded-item btn-primary-s2020 font-weight-medium" id="openFltWindow" title="المواصفات" tabindex="-1"><span style="position: relative;top: 1px;"><i class="s2020 far fa-plus-circle mr-1"></i><span>المواصفات</span></span></a></span>`;
+
+      // Create Element: ShopFront iframe
+      const floatingDiv = `<div class="flaoting-div" width="100%" height="100%">
+<span class="close-window" >X</span>
+<iframe border="0" width="100%" height="100%" src="https://yam9922.daftra.com/contents/process_content/branch_3"></iframe>
+</div>`;
+
+      const floatingDivBranch2 = `<div class="flaoting-div" width="100%" height="100%">
+<span class="close-window" >X</span>
+<iframe border="0" width="100%" height="100%" src="https://yam9922.daftra.com/contents/process_content/branch_2"></iframe>
+</div>`;
+      // Get Estimate Serial Number
+      const estimateNum = $("#InvoiceNo").val();
+
+      // Add new the PopUp Window Button before estimate items table
+      $(".invoice-items").before(specsButton);
+
+      // Add the new Swicth Toggle Button beside the estimate number field
+      $("#InvoiceNo").after(toggleSwitch);
+
+      // Add the new Shopfront iframe to the main content in the estimate page
+      if (USER.branch_id == 2) {
+        $("#main-content").append(floatingDivBranch2);
+      } else if (USER.branch_id == 3) {
+        $("#main-content").append(floatingDiv);
+      }
+
+      // Add the Overlay div to the main content in the estmate page
+      $("#main-content").append(overlay);
+
+      // Function to open the floating window with the SHopFront iframe when click on the PopUp window button
+      const btn = $("#openFltWindow");
+      btn.on("click", function () {
+        $(".flaoting-div").show("fast");
+      });
+
+      // Function to close the floating window
+      $(".close-window").on("click", function () {
+        $(".flaoting-div").hide("fast");
+      });
+
+      // Update the clientId variable when select the client in the estimate
+      $("#InvoiceClientId").on("change", async () => {
+        let clientId = $("#InvoiceClientId").val();
+
+        let clientData = await $.ajax({
+          url: `/api2/clients/${clientId}`,
+          contentType: "application/json",
+        });
+
+        if (
+          clientData.data.length == 1 ||
+          clientData.data.Client != undefined
+        ) {
+          clientDataTitle = clientData.data.Client.phone1;
+          if (clientDataTitle.length != 0) {
+            console.log(clientDataTitle);
+          } else {
+            clientDataTitle = clientData.data.Client["business_name"];
+          }
+        } else {
+          console.log(clientData.data.length);
+          console.log("wait a sec");
+        }
+      });
+
+      // Post request to add new workflow instance
+      function postRequest() {
+        $(".loading-overlay").show();
+        return new Promise((res) => {
+          let num = $("#InvoiceNo").val();
+          let clientId = $("#InvoiceClientId").val();
+          let date = $("#InvoiceDate").val().split("/").reverse().join("-");
+          let contractBudget = $("#TotalValue")
+            .html()
+            .replace("&nbsp;ر.س", "")
+            .replace(/,/g, "");
+
+          $.ajax({
+            url: "/v2/api/entity/le_workflow-type-entity-1",
+            type: "POST",
+            contentType: "application/json",
+            accept: "application/json",
+            data: JSON.stringify({
+              number: {
+                generated: "1212",
+                code: "1212",
+              },
+              title: `${clientDataTitle} - ${num}`,
+              start_date: `${date}`,
+              client_id: `${clientId}`,
+
+              "le_workflow-type-entity-1_custom_data": {
+                estimate_id: `${num}`,
+                budget_total: `${contractBudget}`,
+              },
+            }),
+          })
+            .done((suc) => {
+              res(true);
+            })
+            .fail((fail) => {
+              res(false);
+              $(".loading-overlay").hide();
+            });
+        });
+      }
+
+      // Start Post request when submit the invoice if the Swicth Toggle is true
+      $("#InvoiceForm").one("submit", function (evt) {
+        if ($("#is_contract").is(":checked")) {
+          evt.preventDefault();
+
+          postRequest().then((x) => {
+            if (x) {
+              $("#InvoiceForm").trigger("submit");
+            } else {
+              alert(
+                "حدث خطأ اثناء إنشاء العقد... الرجاء محاولة إنشاء العقد بشكل يدوي"
+              );
+              $("#is_contract").attr("checked", false);
+              $("#InvoiceForm").trigger("submit");
+            }
+          });
+        }
+      });
+
+      //    $('.save').click(function(){$('#InvoiceForm').trigger('submit')})
+    }
+
+    $(".new-btn").click(() => {
+      $(".flaoting-div iframe")
+        .contents()
+        .find(".confirm__reserved")
+        .on("click", function () {
+          $(".flaoting-div").hide();
+          setTimeout(() => {
+            let data = JSON.parse(localStorage.getItem("data"));
+            let allBarcodes = data.map((v) => {
+              let thisBarcode = v.barcode;
+              onReceiveBarCode(thisBarcode);
+              //setItems(thisBarcode)
+            });
+
+            function setItems(x) {
+              //for(let i=0; i<x.length;i++){
+              var tr = $("#listing_table tr:last-child");
+              var td = tr.find("textarea.item_name");
+              td.val(x);
+
+              //   }
+              return true;
+            }
+          }, 500);
+        });
+      console.log(
+        "ready",
+        $(".flaoting-div iframe").contents().find(".confirm__reserved")
+      );
+    });
+  });
+</script>
