@@ -1,0 +1,530 @@
+<style>
+  .cat-box {
+    border-radius: 5px;
+    transition: 0.3s;
+    color: #2d1e16;
+    background: #fff !important;
+    cursor: pointer;
+  }
+
+  ​ .img-cat {
+    width: 200px;
+    height: 300px !important;
+    border-radius: 5px;
+  }
+
+  .loading-overlay {
+    display: none;
+    background: #b3b3b36b;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    top: 0;
+  }
+
+  .loading-overlay-image-container {
+    width: 15%;
+    color: #fff;
+    text-align: center;
+    position: fixed;
+    z-index: 1001;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 15px;
+    height: 80px;
+    border-radius: 5px;
+  }
+
+  .loading-overlay-title {
+    font-size: 1em;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #fff;
+  }
+
+  .loading-overlay-image {
+    width: 20%;
+  }
+</style>
+<div id="new-elm">
+  <div class="row"></div>
+</div>
+<div class="pro-con bg-white d-none">
+  <!-- <div class="close-btn fs-20 px-4 py-2 font-weight-bold text-left col-12">
+      <button class="btn text-color fs-24 p-0 font-weight-semibold">
+        <i class="fas fa-times-circle"></i>
+      </button>
+    </div> -->
+  <div id="main-content-products" class="p-4">
+    <div class="row" id="content-products"></div>
+  </div>
+</div>
+<script>
+  $(document).ready(function () {
+    const overlay = `<div class="loading-overlay">
+        <div class="loading-overlay-image-container">
+           <img class="loading-overlay-image" src="https://yam9922.daftra.com/files/a6bac4d0/logos/6390460ba999d_blobid1670399497453.gif">
+            </div>
+            <div class="loading-overlay-title"></div>
+
+        </div>`;
+
+    $("#main-content").append(overlay);
+    let productID;
+    let productData;
+    let currCat;
+    const url = window.location.href;
+    url.includes("process_content/branch_2")
+      ? $("footer#site-footer, #site-header").hide()
+      : null;
+
+    // async function testApi() {
+    //   console.log("testApi");
+
+    //   //   const productsData = localStorage.getItem("allData");
+    //   if (productsData != null) {
+    //     console.log(JSON.parse(productsData));
+    //     return JSON.parse(productsData);
+    //   } else {
+    //     let allProducts = $(".box");
+    //     let promises = [];
+    //     let apiKey = "0e71fa8cc7c925e519731516ff4433792f32d493";
+
+    //     for (const item of allProducts) {
+    //       let productId = $(item).find(".product").data("product-id");
+    //       let pData = await $.ajax({
+    //         type: "GET",
+    //         url: "/v2/api/entity/product/" + productId,
+    //         headers: {
+    //           "Content-Type": "application/json",
+    //           Accept: "application/json",
+    //           APIKEY: apiKey,
+    //         },
+    //         credentials: "same-origin",
+    //         contentType: "application/json",
+    //       });
+    //       promises.push(pData);
+    //       console.log(pData);
+    //     }
+    //   }
+    // }
+
+    // async function startTest() {
+    //   await testApi().then((data) => {
+    //     console.log("same data");
+    //     console.log(data);
+
+    //     let allProducts = $(".box");
+    //     for (const item of allProducts) {
+    //       let productId = $(item).find(".product").data("product-id");
+    //       let productApi = data.find(({ id }) => id == `${productId}`);
+    //       let cat = productApi.items_categories[0].category_id;
+
+    //       if (cat == "99" || cat == undefined || cat == "") {
+    //         cat =
+    //           productApi.items_categories.length < 2
+    //             ? productApi.items_categories[0].category_id
+    //             : productApi.items_categories[1].category_id;
+    //       }
+    //       let barcode = productApi.barcode;
+    //       let branchId = productApi.branch_id;
+    //       let code = productApi.product_code;
+    //       console.log(cat, barcode, branchId, code);
+    //       $(item).attr("data-cat", cat);
+    //       $(item).attr("data-barcode", barcode);
+    //       $(item).attr("data-branch-id", branchId);
+    //       $(item).attr("data-code", code);
+    //       $(item).find($(".newdiv")).append(`<p class="skucode">${code}</p>`);
+    //       if (branchId != "3") {
+    //         $(item).hide();
+    //       }
+    //     }
+
+    //     //  window.localStorage.getItem("allData");
+    //   });
+    // }
+    $(function () {
+      $(".loading-overlay").show();
+      $.get("/v2/api/entity/le_all_cats/3", (data) => {
+        let allCats = data["le_all_cats_le_all_cats_cat_details"].map((val) => {
+          let catName = val.cat_name;
+          let catID = val.cat;
+          let catImgUrl = val.img_link;
+          let div = `    <div class=" cat_item col-lg-3 col-sm-6 p-2">
+          <div class="item hover bg-white p-4 cat-box" data-cat-id="${catID}">
+            <div class="h-100 mb-6 mb-lg-0 bg-px-5 px-lg-0">
+              <h1 class="fs-20 text-center font-weight-semibold py-3 ">
+                ${catName}
+              </h1>
+              <img
+                class="img-cat mx-auto img-cover product-img-lg"
+                src="${catImgUrl}"
+                alt=""
+              />
+            </div>
+          </div>
+        </div>`;
+          $("#new-elm .row").append(div);
+        });
+      })
+        .done(() => {
+          $(".loading-overlay").hide();
+        })
+        .done(() => {
+          $.ajax({
+            url: "/v2/api/entity/product/list/1?per_page=700",
+            type: "get",
+            success: function (resp) {
+              let data = resp.data;
+              $.each(data, (i, val) => {
+                let catLength =
+                  val.items_categories != null
+                    ? val.items_categories.length
+                    : 0;
+                let catId;
+                if (catLength > 1) {
+                  catId = val.items_categories[0].category_id;
+                  if (catId == "99" || catId == undefined || catId == "") {
+                    catId = val.items_categories[1].category_id;
+                  }
+                  productID = val.id;
+                  let name = val.name;
+                  let barcode = val.barcode;
+                  let branchId = val.branch_id;
+                  let code = val.product_code;
+                  $.get(
+                    `/v2/api/entity/product/${productID}`,
+                    function (pData) {
+                      pImg =
+                        pData.product_images.length > 0
+                          ? `https://yam9922.daftra.com/files/a6bac4d0/product-images/${pData.product_images[0].file}`
+                          : "https://cdn.daftra.com/templates/shop_1/img/category_thumb.svg";
+                      let newDiv = `
+                <div class="col-lg-3 col-6 py-lg-2 px-lg-4 p-2 box hidden" data-cat="${catId}" data-barcode="${barcode}" data-branch-id="${branchId}" data-code="${code}">
+        <div class="item hover bg-white p-2">
+          <div class="h-100 mb-lg-0 pt-2 product px-lg-0" data-product-id="${productID}" data-image="" data-price="" data-name="${name}">
+            <div>
+              <label class="checkbox">
+                <input type="checkbox">
+                <div></div>
+              </label>
+            </div>
+            <div class="pro-info pt-xl-2 pt-0">
+              <a href="/contents/product_view/3670" class="text-decoration-none text-hover-black">
+                <h6 class="fs-xl-16 fs-14 font-weight-medium name m-0 p-1" style="min-height: 48px; text-align: right">
+                  ${name}
+                </h6>
+              </a>
+              <div class="pro-img">
+              <a href="/contents/product_view/3671" class="text-decoration-none text-hover-black">
+                <img src="${pImg}" alt="" class="product-img-sm img-fluid h-180px w-100 mx-auto img-cover p-2">
+              </a>
+            </div>
+            </div>
+
+            <div class=>${code}</div>
+
+          </div>
+        </div>
+      </div>`;
+                      $("  #content-products").append(newDiv);
+                    }
+                  ).done(() => {
+                    let allBoxes = $(".box");
+                    console.log(allBoxes);
+                  });
+
+                  // let pImg;
+
+                  // productData = $.ajax({
+                  //   type: "GET",
+                  //   url: "/v2/api/entity/product/" + productID,
+                  //   success: function (resp) {
+                  //     console.log(resp);
+                  //     pImg = resp.product_images.length;
+                  //   },
+                  // });
+                  // console.log(productData.responseJSON);
+                  //   console.log(pImg);
+                  // pImg =
+                  //   responseJSON.product_images.length > 0
+                  //     ? `https://yam9922.daftra.com/files/a6bac4d0/product-images/${data.product_images[0].file}`
+                  //     : "https://cdn.daftra.com/templates/shop_1/img/category_thumb.svg";
+                  // console.log(pImg);
+
+                  //  console.log(val);
+                  //    console.log(catId, name, barcode, branchId, code);
+                } else {
+                  catId = "0";
+                }
+              });
+            },
+          })
+            // .done(() => {
+            //   //   testApi();
+            //   startTest();
+            //   //productCatsData()
+            //   $(".loading-overlay").hide();
+            // })
+            .done(() => {
+              $(".box").addClass("hidden");
+              let allBoxes = $(".box");
+              console.log(allBoxes);
+              allBoxes.on("click", function () {
+                //   console.log(currCat);
+
+                $(this)
+                  .find("input:checkbox")
+                  .prop(
+                    "checked",
+                    !$(this).find("input:checkbox").is(":checked")
+                  );
+                let thisItemChecked = $(this)
+                  .find("input:checkbox")
+                  .is(":checked");
+                if (thisItemChecked) {
+                  //       console.log(thisItemChecked);
+                  // $(this).find("input:checkbox").prop("checked", true);
+                  //   console.log(thisItemChecked);
+                  $(this).find(".item").addClass("active");
+                  $(this).addClass("selected");
+                  let catID = $(this).data("cat");
+                  let prodID = $(this).find(".product").data("product-id");
+                  let prodName = $(this).find(".product").data("name");
+                  let prodBarcode = $(this).data("barcode");
+                  let code = $(this).data("code");
+
+                  let prodDetails = {
+                    catID,
+                    currCat,
+                    prodID,
+                    prodName,
+                    prodBarcode,
+                  };
+                  //    console.log(prodDetails);
+                  let newAddItem = `
+                            <div class="new__addedItem" style="opacity:0">
+                              <div class="item__container" data-cat-name="${currCat}" data-barcode="${prodBarcode}"  data-cat-id="${catID}" data-prod-id="${prodID}" data-prod-name="${prodName}">${prodName} - ${currCat} - ${code}</div>
+                              <div class="removeItem__container">
+                              <i class="remove__item fa-solid fa-trash fas fa-trash"></i>
+        </div>
+                              </div>
+                        `;
+                  $(".container__body").append(newAddItem);
+                  $(".new__addedItem:last-child").animate(
+                    {
+                      opacity: "1",
+                    },
+                    300
+                  );
+                  $(".remove__item").click((e) => {
+                    $(e.target).parent().parent().fadeOut(300).remove();
+                    var allSelected2 = $(".box");
+                    filterSelected2 = allSelected2.filter(
+                      (i, v) =>
+                        $(v).find(".product").data("product-id") ==
+                        $(e.target)
+                          .parent()
+                          .parent()
+                          .find(".item__container")
+                          .data("prod-id")
+                    );
+                    //   console.log(filterSelected2);
+                    $(filterSelected2)
+                      .find("input:checkbox")
+                      .prop(
+                        "checked",
+                        !$(this).find("input:checkbox").is(":checked")
+                      );
+                    $(filterSelected2).find(".item").removeClass("active");
+                    $(filterSelected2).removeClass("selected");
+                  });
+                } else {
+                  //     console.log(thisItemChecked);
+                  // $(this).find("input:checkbox").prop("checked", false);
+                  //      console.log(thisItemChecked);
+                  $(this).find(".item").removeClass("active");
+                  $(this).removeClass("selected");
+                  var allSelected = $(".new__addedItem");
+                  filterSelected = allSelected.filter(
+                    (i, v) =>
+                      $(v).data("prod-id") ==
+                      $(this).closest(".product").data("product-id")
+                  );
+                  // console.log(filterSelected);
+                  filterSelected.eq(0).fadeOut(300).remove();
+                }
+              });
+            });
+        })
+        .done(() => {
+          //  let card = $(".cat-box")
+          $(".cat-box").on("click", function () {
+            //    $(this).toggleClass("active-card");
+
+            catN = $(this).find("h1").text().trim();
+            $(this).hasClass("cat-box") ? (currCat = catN) : null;
+            let catId = $(this).data("cat-id");
+            let allProducts = $(".box");
+            $.each(allProducts, async (i, val) => {
+              let productCatId = $(val).data("cat");
+              //  console.log(productCatId);
+              if (catId == productCatId) {
+                //    console.log(catId, productCatId);
+                //     $(this).removeClass("active-card");
+                $(".close-btn").removeClass("d-none");
+                $(val).removeClass("hidden");
+                $("#new-elm").addClass("hidden");
+                $(".pro-con").removeClass("d-none");
+              }
+            });
+          });
+        })
+        .done(() => {
+          $(".close-btn").on("click", function () {
+            $(".close-btn").addClass("d-none");
+
+            $("#new-elm").removeClass("hidden");
+            $(".box").addClass("hidden");
+            $(".pro-con").addClass("d-none");
+          });
+        });
+
+      return false;
+    });
+
+    function itemsDrawer() {
+      let theContainer = `
+        <div class="the__container">
+                  <span class="container__toggle" data-status="0"><i class="toggle__mark fa-solid fa-chevrons-right"></i></span>
+                  <span class="container__resize"></span>
+                  <div class="rooms__container">
+                  <div class="container__body">
+                          </div>
+  <div class="d-flex w-100 btn-cont">
+    <div class="close-btn fs-20 font-weight-bold text-right d-none">
+      <button class="btn text-color fs-24 p-0 font-weight-semibold">
+        <i class="fas fa-arrow-alt-to-left"></i>
+      </button>
+    </div>
+                  <div class="holder__btn_container">
+                  <button type="button" class="confirm__reserved">أضف</button>
+                      </div>
+
+    </div>
+                      </div>
+
+              </div>
+
+              `;
+      $("#new-elm").after(theContainer);
+      toggleOnClick();
+      containerResize();
+      let contWidth = 300;
+
+      function containerResize() {
+        let resizedContainer = $(".the__container"),
+          resizer = $(".container__resize");
+        dragMouseDown();
+
+        function dragMouseDown() {
+          resizer.mousedown((e) => {
+            let dragY = e.clientX;
+            $(document).mousemove((e) => {
+              resizedContainer.css({
+                width: `${
+                  resizedContainer.outerWidth() + e.clientX - dragY + "px"
+                }`,
+              });
+              dragY = e.clientX;
+              contWidth = dragY;
+              if (contWidth < 190) {
+                $(".confirm__reserved").css({
+                  transform: "translateY(100px)",
+                });
+                $(".container__toggle").addClass("rotate");
+              } else {
+                $(".confirm__reserved").css({
+                  transform: "translateY(0)",
+                  opacity: "1",
+                });
+                $(".container__toggle").addClass("rotate");
+              }
+            });
+          });
+        }
+        $(document).mouseup(() => {
+          resizer.unbind("mousedown");
+          $(document).unbind("mousemove");
+          setTimeout(() => {
+            dragMouseDown();
+          }, 500);
+        });
+      }
+
+      function toggleOnClick() {
+        $(".container__toggle").click(function () {
+          $this = $(this);
+          $thisContainer = $this.parent();
+          $thisWidth = $this.parent().width();
+          if ($thisWidth > 15) {
+            $thisContainer.animate({
+              width: `15px`,
+            });
+            $this.attr("data-status", "0");
+            $(".confirm__reserved").css({
+              transform: "translateY(100px)",
+            });
+            $this.removeClass("rotate");
+          } else {
+            $this.addClass("rotate");
+            if ($this.attr("data-status") == "0") {
+              $thisContainer.animate({
+                width: `+=${contWidth}px`,
+              });
+              $this.attr("data-status", "1");
+              if (contWidth > 190) {
+                $(".confirm__reserved").css({
+                  transform: "translateY(0)",
+                  opacity: "1",
+                });
+              }
+            } else if ($this.attr("data-status") == "1") {
+              $thisContainer.animate({
+                width: `15px`,
+              });
+              $this.attr("data-status", "0");
+              $(".confirm__reserved").css({
+                transform: "translateY(100px)",
+              });
+            }
+          }
+        });
+      }
+    }
+    itemsDrawer();
+    $(".confirm__reserved").click(function () {
+      let allSelectedItems = $(".new__addedItem");
+      let exportedData = [];
+      allSelectedItems.map((i, val) => {
+        let catID = $(val).find(".item__container").data("cat-id");
+        let prodID = $(val).find(".item__container").data("prod-id");
+        let prodName = $(val).find(".item__container").data("prod-name");
+        let catName = $(val).find(".item__container").data("cat-name");
+        let barcode = $(val).find(".item__container").data("barcode");
+        let prodDetails = {
+          catID,
+          prodID,
+          prodName,
+          catName,
+          barcode,
+        };
+        exportedData.push(prodDetails);
+      });
+      localStorage.setItem("data", JSON.stringify(exportedData));
+      console.log(exportedData);
+    });
+  });
+</script>
