@@ -1,0 +1,40 @@
+<script>
+  $(document).ready(() => {
+    const shopElement = $(
+      "#main-content > div > div.header.clearfix > div > div > div.col-md-4.col-sm-4.col-xs-5 > div > ul"
+    );
+    if (USER.branch_id == 2) {
+      $(".mn_workflows>div ul li:nth-child(2)").hide();
+      const catTab = `
+    <li class="dropdown res-right" style="background:#77777742">
+                    <a class="px-0" href="https://yam9922.daftra.com/v2/owner/entity/le_all_cats/3/edit">
+                    <span class="px-3 d-inline-flex align-content-center text-white">
+                        <i class="fs-20 mdi  mdi-apps mr-lg-2"></i>
+                        <span class="visible-sm d-xl-inline-block text-nowrap">تصنيف المواصفات</span>
+                    </span>
+                    </a>
+                </li>
+    `;
+      setTimeout(() => {
+        shopElement.prepend(catTab);
+      }, 500);
+    } else if (USER.branch_id == 3) {
+      $(".mn_workflows>div ul li:nth-child(2)").hide();
+      const catTab = `
+    <li class="dropdown res-right" style="background:#77777742">
+                    <a class="px-0" href="https://yam9922.daftra.com/v2/owner/entity/le_all_cats/4/edit">
+                    <span class="px-3 d-inline-flex align-content-center text-white">
+                        <i class="fs-20 mdi  mdi-apps mr-lg-2"></i>
+                        <span class="visible-sm d-xl-inline-block text-nowrap">تصنيف المواصفات</span>
+                    </span>
+                    </a>
+                </li>
+    `;
+      setTimeout(() => {
+        shopElement.prepend(catTab);
+      }, 500);
+    } else {
+      $(".mn_workflows>div ul li:nth-child(1)").hide();
+    }
+  });
+</script>
