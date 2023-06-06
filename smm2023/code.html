@@ -1,0 +1,71 @@
+<script>
+  $(document).ready(function () {
+    let btnFake = `
+      <a id="checking" class="text-white btn btn-primary d-flex align-items-center justify-content-between btn-block px-4 py-3 text-uppercase fs-16 font-weight-medium btn-lg mt-auto">
+          <span>الدفع</span>
+          <span class="fas fa-arrow-square-right"></span>
+        </a>`;
+    let btn = $("#checkout-btn");
+    let catItem = $(".cart-items .cart-item");
+    $(".side-sidebar-footer").append(btnFake);
+    $("#checkout-btn").removeClass("d-flex");
+    $("#checkout-btn").addClass("d-none");
+
+    $.each($(catItem), (i, val) => {
+      let productId = $(val).data("id");
+
+      $("#checking").click((e) => {
+        let selectedQty = $(val).find(".cart-item-qty").val();
+        console.log(selectedQty);
+      });
+      $.ajax({
+        type: "GET",
+        url: "/v2/api/entity/product/" + productId,
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          APIKEY: "dfe57775097ce568a31f7754a599da8d4beeb063",
+        },
+        credentials: "same-origin",
+        contentType: "application/json",
+      }).done((data) => {
+        let qty = data.custom_data.field_2;
+        if (qty != null) {
+          qty = parseFloat(qty);
+          //   e.preventDefault()
+        } else {
+          qty = 0;
+        }
+        console.log(qty);
+      });
+    });
+  });
+</script>
+
+<div
+  style="
+    position: absolute;
+    left: 2%;
+    z-index: 555;
+    top: 26%;
+    height: 200px;
+    width: 96%;
+    background: #fff;
+    padding: 11px;
+    box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;
+  "
+>
+  <div>
+    <div class="p-4 text-right" class="exit">
+      <i
+        _ngcontent-c2=""
+        style="color: #20485f; font-size: 20px"
+        class="fa fa-times"
+      ></i>
+    </div>
+    <p class="m-0 fs-18 font-weight-bold text-primary">
+      غير متاح عمل فاتورة بالكمية المحددة من قبلكم للمنتج ${name} يجب ان تكون
+      الكمية لا تقل عن ${qty}
+    </p>
+  </div>
+</div>
