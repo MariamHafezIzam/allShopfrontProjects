@@ -1,0 +1,419 @@
+<style>
+  .newdiv p {
+    margin-bottom: 8px !important;
+    font-weight: 600;
+  }
+  .card-details {
+    text-align: center;
+  }
+  .color {
+    display: flex;
+    justify-content: center;
+  }
+  .title {
+    font-weight: 400 !important;
+  }
+  .product-card {
+    background-color: #fff;
+    border-radius: 9px;
+    transition: 0.5s;
+  }
+  .product-card:hover {
+    box-shadow: rgb(50 50 93 / 25%) 0px 13px 27px -5px,
+      rgb(0 0 0 / 30%) 0px 8px 16px -8px;
+  }
+  .pop {
+    display: none;
+    background-color: #fff;
+    position: fixed;
+    top: 10.3%;
+    left: 30%;
+    width: 40%;
+    /* height:80%; */
+    border-radius: 6px;
+    outline: 3px solid #ff612880;
+    z-index: 5;
+    padding: 15px;
+  }
+
+  .exit-btn {
+    text-align: right;
+    padding: 5px;
+    border: 1px solid #ff6128;
+    border-radius: 5px;
+    color: #ff6128;
+  }
+  .date {
+    display: flex;
+    justify-content: space-evenly;
+  }
+  .date input {
+    border: 1px solid #ff6128;
+    border-radius: 5px;
+    padding: 3px 8px;
+    color: #3a2a2f;
+  }
+  .page-item.active .page-link,
+  .page-link:hover {
+    background-color: #ff6128 !important;
+    border-color: #ff6128;
+  }
+  a.bg-placeholder:hover {
+    background-color: #f9e0e0 !important;
+    border-color: #e7cdc4 !important ;
+  }
+  a.bg-placeholder {
+    background-color: #f2e9e4 !important;
+  }
+</style>
+{{#Category.name}}
+<div id="home-slider-section" class="pt-lg-7">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6 px-0 px-lg-3">
+        {{#Category.image_full_path}}
+        <div
+          class="px-14 bg-placeholder text-center text-lg-left bg-cover bg-center"
+          style="background-image: url({{Category.image_full_path}});height: 350px;"
+        ></div>
+        {{/Category.image_full_path}} {{^Category.image_full_path}}
+        <div class="py-22 px-14 bg-placeholder text-center text-lg-left">
+          <h1 class="text-dark fs-30 fs-lg-40">{{Category.name}}</h1>
+        </div>
+        {{/Category.image_full_path}}
+      </div>
+      <div class="col-lg-6 px-0 px-lg-3">
+        <h1 class="text-dark fs-30 fs-lg-40">{{Category.name}}</h1>
+        <h3 class="py-3 font-weight-semibold text-secondry">
+          {{Category.description}}
+        </h3>
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="pt-8">
+              <div class="row">
+                <div class="col col-lg-8">
+                  <div class="text-left">
+                    <div
+                      class="d-inline-flex flex-column flex-lg-row align-items-lg-center text-left w-100"
+                    >
+                      <span
+                        class="fs-16 d-block d-lg-inline-block font-weight-medium text-primary mr-2"
+                      >
+                        Sort by:
+                      </span>
+                      <div class="sort-filter">
+                        <select class="form-control mr-1 d-inline-block w-auto">
+                          {{#sortFields}}
+                          <option value="{{field_name}}">{{title}}</option>
+                          {{/sortFields}}
+                        </select>
+                        <button
+                          type="button"
+                          class="fas fa-arrow-down d-inline-flex align-items-center justify-content-center w-38px h-38px btn p-0 btn-placeholder d-inline-block sort-dir-desc"
+                          data-toggle="tooltip"
+                          data-placement="bottom"
+                          title="DESC"
+                        ></button>
+                        <button
+                          type="button"
+                          class="fas fa-arrow-up d-inline-flex align-items-center justify-content-center w-38px h-38px btn p-0 btn-placeholder d-inline-block sort-dir-asc"
+                          data-toggle="tooltip"
+                          data-placement="bottom"
+                          title="ASC"
+                        ></button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col flex-grow-0 col-lg-4">
+                  <div class="text-right">
+                    <div
+                      class="d-inline-flex flex-column flex-lg-row align-items-lg-center text-left"
+                    >
+                      <span
+                        class="fs-16 d-block d-lg-inline-block font-weight-medium text-primary mr-2"
+                      >
+                        Display:
+                      </span>
+                      <select id="" class="form-control show-limit">
+                        {{#limits}}
+                        <option
+                          value="{{text}}"
+                          {{#active}}
+                          selected="selected"
+                        >
+                          {{/active}} >{{text}}
+                        </option>
+                        {{/limits}}
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{{/Category.name}} {{^products_count}}
+<div id="home-slider-section" class="pt-lg-7">
+  <div class="container">
+    <div class="row">
+      <div class="py-22 px-14 text-center">
+        <h1 class="text-dark fs-30 fs-lg-40">{{query}}</h1>
+      </div>
+    </div>
+  </div>
+</div>
+{{/products_count}} {{#results}}
+<div id="products-section" class="pb-4">
+  <div class="container">
+    <!-- <div class="row">
+      <div class="col-lg-12">
+        <div class="pt-8">
+          <div class="row">
+            <div class="col col-lg-8">
+              <div class="text-left">
+                <div
+                  class="d-inline-flex flex-column flex-lg-row align-items-lg-center text-left w-100"
+                >
+                  <span
+                    class="fs-16 d-block d-lg-inline-block font-weight-medium text-primary mr-2"
+                  >
+                    Sort by:
+                  </span>
+                  <div class="sort-filter">
+                    <select class="form-control mr-1 d-inline-block w-auto">
+                      {{#sortFields}}
+                      <option value="{{field_name}}">{{title}}</option>
+                      {{/sortFields}}
+                    </select>
+                    <button
+                      type="button"
+                      class="fas fa-arrow-down d-inline-flex align-items-center justify-content-center w-38px h-38px btn p-0 btn-placeholder d-inline-block sort-dir-desc"
+                      data-toggle="tooltip"
+                      data-placement="bottom"
+                      title="DESC"
+                    ></button>
+                    <button
+                      type="button"
+                      class="fas fa-arrow-up d-inline-flex align-items-center justify-content-center w-38px h-38px btn p-0 btn-placeholder d-inline-block sort-dir-asc"
+                      data-toggle="tooltip"
+                      data-placement="bottom"
+                      title="ASC"
+                    ></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col flex-grow-0 col-lg-4">
+              <div class="text-right">
+                <div
+                  class="d-inline-flex flex-column flex-lg-row align-items-lg-center text-left"
+                >
+                  <span
+                    class="fs-16 d-block d-lg-inline-block font-weight-medium text-primary mr-2"
+                  >
+                    Display:
+                  </span>
+                  <select id="" class="form-control show-limit">
+                    {{#limits}}
+                    <option value="{{text}}" {{#active}} selected="selected">
+                      {{/active}} >{{text}}
+                    </option>
+                    {{/limits}}
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+    <div class="row">
+      <div class="col-lg-12 px-0 px-lg-3">
+        <div class="pt-8"></div>
+        <div class="border-top border-placeholder pb-8"></div>
+      </div>
+    </div>
+    <div class="row">
+      {{#products}}
+
+      <div class="col-lg-2 col-sm-6 py-2 product-card m-4">
+        <div
+          style="align-items: center !important; justify-content: center"
+          class="align-items-start d-flex flex-column h-100 mb-6 mb-lg-0 product px-5 px-lg-0 pb-4 product_cart"
+          data-product-id="{{id}}"
+          data-image="{{file_full_path}}"
+          data-price="{{final_price_number}}"
+          data-name="{{name}}"
+        >
+          <a href="/contents/product_view/{{id}}" class="text-decoration-none">
+            <img
+              src="{{file_full_path}}"
+              alt=""
+              class="product-img-sm img-fluid h-180px w-100 mx-auto img-cover mb-3"
+              style="border-radius: 9px"
+            />
+            <h6
+              class="fs-20 font-weight-bold hover-col mb-0 productname"
+              style="text-align: center"
+            >
+              {{ name }}<span
+                class="font-weight-medium fs-16 text-body ml-2"
+                id="productId"
+                >#{{id}}</span
+              >
+            </h6>
+          </a>
+          <!-- <p class="fs-16 fs-md-14 fs-xl-16 font-weight-medium text-body mb-3 " > {{description}} </p> -->
+          <div class="mb-2 font-weight-bold mt-auto">
+            {{#discount}}
+            <span class="text-secondary fs-24">{{final_price}}</span>
+            <del class="text-danger"
+              ><span class="text-alto font-weight-extrabold fs-14 mr-2"
+                >{{unit_price}}</span
+              ></del
+            >
+
+            {{/discount}} {{^discount}}
+            <span class="text-secondary fs-24 price">{{final_price}}</span>
+            {{/discount}}
+          </div>
+          <div class="newdiv text-primary"></div>
+          <!-- <button
+            data-name="sallamon"
+            class="add-to-cart-btn btn btn-sm text-uppercase font-weight-medium bg-second m-2 p-2 fs-14 rounded-start btn-new"
+            style="align-self: center"
+          >
+            <i class="fal fa-cart-plus mr-2"></i>Add to Cart
+          </button> -->
+          <button
+            class="btn btn-sm text-uppercase font-weight-medium bg-second p-2 fs-14 rounded-start btn-new m-2 click"
+            style="align-self: center"
+          >
+            Click Here
+          </button>
+        </div>
+      </div>
+      {{/products}} {{^products_count}}
+      <p>There is no products</p>
+      {{/products_count}}
+    </div>
+    <div class="col-lg-12 text-center">
+      <button
+        class="btn btn-sm text-uppercase font-weight-medium bg-second p-2 fs-14 rounded-start btn-new m-2 reg"
+        style="align-self: center"
+      >
+        CHECKOUT
+      </button>
+      <div class="pop">
+        <div style="text-align: right">
+          <button class="btn exit exit-btn">✖</button>
+        </div>
+        <p class="fs-16 fs-md-14 fs-xl-16 font-weight-medium text-primary mb-3">
+          هل تريد الفاتورة شاملة الضريبة ام لا
+        </p>
+        <div class="date">
+          <div>
+            <button
+              class="btn btn-sm text-uppercase font-weight-medium bg-second p-2 fs-14 rounded-start btn-new m-2"
+              data-url="tanqeb"
+              style="align-self: center"
+            >
+              شامل الضريبة
+            </button>
+          </div>
+          <div>
+            <button
+              class="btn btn-sm text-uppercase font-weight-medium bg-second p-2 fs-14 rounded-start btn-new m-2"
+              data-url="daftraAdmin"
+              style="align-self: center"
+            >
+              غير شاملة
+            </button>
+          </div>
+        </div>
+        <div style="text-align: center"></div>
+      </div>
+    </div>
+    {{#products_count}}
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="text-center pt-8">
+          <nav class="d-inline-flex mb-0 align-items-center">
+            <span
+              class="text-primary fs-16 mr-2 font-weight-medium d-none d-lg-inline-block"
+            >
+              Page:
+            </span>
+            <ul class="pagination mb-0">
+              {{#prevPage}}
+              <li class="page-item">
+                <a class="page-link bg-placeholder" href="{{prevPageLink}}"
+                  ><i class="fa fas fa-arrow-left"></i
+                ></a>
+              </li>
+              {{/prevPage}} {{#pages}} {{#active}}
+              <li class="page-item active">
+                <a class="page-link" href="{{link}}"> {{page}} </a>
+              </li>
+              {{/active}} {{^active}}
+              <li class="page-item">
+                <a class="page-link" href="{{link}}"> {{page}} </a>
+              </li>
+              {{/active}} {{/pages}} {{#nextPage}}
+              <li class="page-item">
+                <a class="page-link bg-placeholder" href="{{nextPageLink}}"
+                  ><i class="fas fa-arrow-right"></i
+                ></a>
+              </li>
+              {{/nextPage}}
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+    {{/products_count}}
+  </div>
+</div>
+{{/results}}
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+  integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+></script>
+
+<script>
+  $(document).ready(() => {
+    if (Intl.DateTimeFormat().resolvedOptions().timeZone == "Africa/Cairo") {
+      $(".pop").fadeIn(300);
+      // positionPopup();
+
+      $(".exit").click(function () {
+        $(".pop").fadeOut(300);
+      });
+    }
+
+    var prodObj = {};
+    var prodArr = [];
+    $(".click").click(function () {
+      var proContainer = $(this).parent();
+
+      var price = proContainer.data("price");
+      var name = proContainer.data("name");
+      var prodID = proContainer.data("product-id");
+
+      prodObj.price = price;
+      prodObj.name = name;
+      prodObj.prodID = prodID;
+
+      prodArr.push(prodObj);
+
+      console.log(prodArr);
+    });
+  });
+</script>
