@@ -1,0 +1,120 @@
+<div class="container px-0 py-3" id="women-cag">
+  <div class="pt-4">
+    <div class="container px-0" style="max-width: 100%; margin: auto">
+      <h3 class="title font-weight-semibold my-0 px-0 fs-22 text-primary">
+        كاجوال حريمي
+      </h3>
+
+      <div class="container">
+        <div id="women" data-id="712"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container px-0 py-3" id="women-homee">
+  <div class="pt-4">
+    <div class="container px-0" style="max-width: 100%; margin: auto">
+      <h3 class="title font-weight-semibold my-0 px-0 fs-22 text-primary">
+        بيتى حريمى
+      </h3>
+      <div class="container">
+        <div id="women-home" data-id="715"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container px-0 py-3" id="lang">
+  <div class="pt-4">
+    <div class="container px-0" style="max-width: 100%; margin: auto">
+      <h3 class="title font-weight-semibold my-0 px-0 fs-22 text-primary">
+        داخلى حريمى
+      </h3>
+
+      <div class="container">
+        <div id="women-lang" data-id="718"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  $(document).ready(function () {
+    $.ajax({
+      url: `/contents/products_list?cat_id=712`,
+      type: "get",
+      success: function (resp) {
+        $("#women").html($(resp).find("#home-categories-section"));
+      },
+    });
+    $.ajax({
+      url: `/contents/products_list?cat_id=715`,
+      type: "get",
+      success: function (resp) {
+        $("#women-home").html($(resp).find("#home-categories-section"));
+      },
+    });
+    $.ajax({
+      url: `/contents/products_list?cat_id=718`,
+      type: "get",
+      success: function (resp) {
+        $("#women-lang").html($(resp).find("#home-categories-section"));
+      },
+    });
+    setTimeout(() => {
+      var swiper = new Swiper("#women-cag .swiper-cat", {
+        breakpoints: {
+          250: {
+            slidesPerView: 1,
+            spaceBetween: 0,
+          },
+          1300: {
+            slidesPerView: 3,
+            spaceBetween: 0,
+          },
+        },
+
+        reverseDirection: true,
+        navigation: {
+          nextEl: "#women-cag .swiper-button-prev",
+          prevEl: "#women-cag .swiper-button-next",
+        },
+      });
+      var swiper2 = new Swiper("#women-homee .swiper-cat", {
+        breakpoints: {
+          250: {
+            slidesPerView: 1,
+            spaceBetween: 0,
+          },
+          1300: {
+            slidesPerView: 3,
+            spaceBetween: 0,
+          },
+        },
+
+        reverseDirection: true,
+        navigation: {
+          nextEl: "#women-homee .swiper-button-prev",
+          prevEl: "#women-homee .swiper-button-next",
+        },
+      });
+      var swiper3 = new Swiper("#lang .swiper-cat", {
+        breakpoints: {
+          250: {
+            slidesPerView: 1,
+            spaceBetween: 0,
+          },
+          1300: {
+            slidesPerView: 3,
+            spaceBetween: 0,
+          },
+        },
+
+        reverseDirection: true,
+        navigation: {
+          nextEl: "#lang .swiper-button-prev",
+          prevEl: "#lang .swiper-button-next",
+        },
+      });
+    }, 5000);
+  });
+</script>

@@ -1,0 +1,437 @@
+<style>
+  * {
+    direction: rtl;
+  }
+  .featured-text {
+    height: 90px;
+  }
+  .card-img {
+    border-top-right-radius: 15px !important;
+    border-top-left-radius: 15px !important;
+    height: 305px;
+    object-fit: cover;
+  }
+
+  .price {
+    color: #5bb0ba;
+  }
+  .stock {
+    color: #87384f;
+  }
+  .card-title {
+    color: #607d86;
+    line-height: 1.4;
+    height: 70px;
+  }
+  .text-alto {
+    color: #87384f !important;
+  }
+  .btn-arrow,
+  .page-item.active .page-link,
+  .page-link:hover {
+    background-color: #5bb0ba !important;
+    color: #fff !important;
+    height: 37px !important;
+    width: 37px !important;
+    border-radius: 5px;
+    border: 1px solid #5bb0ba;
+    margin: 3px !important;
+    transition: all 0.2s ease-in-out;
+  }
+  .page-link {
+    background-color: #ececec !important;
+    color: #5bb0ba !important;
+    height: 37px !important;
+    width: 37px !important;
+    border-radius: 5px;
+    border: 1px solid #ececec;
+    margin: 3px !important;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .swiper-cat {
+    overflow: hidden;
+  }
+  .swiper-button-next,
+  .swiper-button-prev {
+    padding: 4px 13px;
+  }
+  .cat-img {
+    display: block;
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+    border-top-right-radius: 15px !important;
+    border-top-left-radius: 15px !important;
+  }
+  .swiper-button-next,
+  .swiper-button-prev {
+    background-image: none !important;
+    background-color: #5bb0ba;
+    color: #fff;
+    display: flex !important;
+  }
+  .row-swiper .swiper-button-next {
+    background-image: none;
+    display: flex !important;
+  }
+  .row-swiper .swiper-button-prev,
+  .row-swiper .swiper-rtl .swiper-button-next {
+    background-color: #5bb0ba !important;
+    color: #fff !important;
+    display: flex !important;
+  }
+  #mySwiper .swiper-slide {
+    margin: 0px !important;
+  }
+  .swiper-button-next:after,
+  .swiper-button-prev:after {
+    color: #fff !important;
+    background-color: #5bb0ba !important;
+    font-size: 26px !important;
+    font-weight: 600;
+  }
+  .swiper-button-next,
+  .swiper-button-prev {
+    height: 37px !important;
+    width: 38px !important;
+  }
+  .custom_content .swiper-button-prev,
+  .custom_content .swiper-rtl .custom_content .swiper-button-next {
+    color: #fff !important;
+    background-color: #5bb0ba !important;
+  }
+  .swiper-button-prev:hover {
+    border-color: #5bb0ba !important;
+  }
+  .swiper-button-prev {
+    margin-right: 15px !important;
+  }
+  .swiper-button-next {
+    margin-left: 15px !important;
+  }
+  .cat-card {
+    border: 2px solid #607d86;
+    box-shadow: 2px 2px 10px 2px rgb(96 94 94 / 20%);
+    border-radius: 15px;
+  }
+  .cat-card:hover {
+    box-shadow: 2px 2px 10px 2px rgba(96, 94, 94, 0.456);
+    transition: all 0.5s ease-in-out;
+  }
+  .swiper-button-next,
+  .swiper-container-rtl .swiper-button-prev {
+    right: 90% !important;
+  }
+</style>
+{{#Category.name}}
+<div id="home-slider-section" class="pt-lg-7">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 px-0 px-lg-3">
+        {{#Category.image_full_path}}
+        <div
+          class="py-22 px-14 bg-placeholder text-center text-lg-left bg-cover bg-center"
+          style="background-image: url({{Category.image_full_path}})"
+        >
+          <h1 class="text-dark fs-30 fs-lg-40">{{Category.name}}</h1>
+        </div>
+        {{/Category.image_full_path}} {{^Category.image_full_path}}
+        <div class="py-22 px-14 bg-placeholder text-center text-lg-left">
+          <h1 class="text-dark fs-30 fs-lg-40">{{Category.name}}</h1>
+        </div>
+        {{/Category.image_full_path}}
+      </div>
+    </div>
+  </div>
+
+  {{#categories_count}}
+  <div id="home-categories-section" class="pt-7">
+    <div class="container">
+      <div
+        style="position: relative; width: 100%; height: 40px; margin-top: -60px"
+      >
+        <div class="swiper-button-next">
+          <i class="fas fa-chevron-left fs-16 pr-2 pt-1"></i>
+        </div>
+        <div class="swiper-button-prev">
+          <i class="fas fa-chevron-right fs-16 pr-2 pt-1"></i>
+        </div>
+      </div>
+      <div class="">
+        <div class="swiper mySwiper swiper-cat">
+          <div class="swiper-wrapper">
+            {{#categories}}
+            <div
+              class="swiper-slide col-lg-3 col-6 col py-2 px-lg-4 px-1 card-product box"
+            >
+              <div class="cat-card">
+                <div class="text-center mb-6 mb-lg-0">
+                  {{#image_full_path}}
+                  <img src="{{image_full_path}}" class="cat-img" />
+                  {{/image_full_path}} {{^image_full_path}}
+                  <img
+                    src="https://cdn.daftra.com/templates/shop_1/img/category_thumb.svg"
+                    class="cat-img"
+                  />
+                  {{/image_full_path}}
+                  <h6 class="fs-18 font-weight-semibold py-2 text-black">
+                    {{name}}
+                  </h6>
+                  <div class="text-center w-50" style="display: inline-block">
+                    <a
+                      href="/contents/products_list?cat_id={{id}}"
+                      class="text-decoration-none btn btn-action py-2"
+                    >
+                      عرض
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <!-- <a
+                href="/contents/products_list?cat_id={{id}}"
+                class="text-decoration-none text-black text-hover-primary"
+              >
+                <div class="text-center mb-6 mb-lg-0">
+                  {{#image_full_path}}
+                  <img src="{{image_full_path}}" class="cat-img" />
+                  {{/image_full_path}} {{^image_full_path}}
+                  <img
+                    src="https://cdn.daftra.com/templates/shop_1/img/category_thumb.svg"
+                    class="cat-img"
+                  />
+                  {{/image_full_path}}
+                  <h6 class="fs-18 font-weight-bold mb-2">{{name}}</h6>
+                </div>
+              </a> -->
+            </div>
+            {{/categories}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{/categories_count}}
+</div>
+{{/Category.name}} {{#query}}
+<div id="home-slider-section" class="pt-lg-7">
+  <div class="container">
+    <div class="row">
+      <div class="py-22 px-14 text-center">
+        <h1 class="text-dark fs-30 fs-lg-40">{{query}}</h1>
+      </div>
+    </div>
+  </div>
+</div>
+{{/query}}
+<div id="products-section" class="pb-4">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="pt-8">
+          <div class="row">
+            <div class="col col-lg-8">
+              <div class="text-left">
+                <div
+                  class="d-inline-flex flex-column flex-lg-row align-items-lg-center text-left w-100"
+                >
+                  <span
+                    class="fs-18 d-block d-lg-inline-block font-weight-semibold text-primary ml-3"
+                  >
+                    ترتيب حسب السعر
+                  </span>
+                  <div class="sort-filter">
+                    <!-- <select class="form-control mr-1 d-inline-block w-auto">
+                      {{#sortFields}}
+                      <option value="{{field_name}}">{{title}}</option>
+                      {{/sortFields}}
+                    </select> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="col flex-grow-0 col-lg-4 d-flex"
+              style="justify-content: end;"
+            >
+              <div
+                class="d-inline-flex flex-column flex-lg-row align-items-lg-center text-left"
+              >
+                <button
+                  type="button"
+                  class="fas fa-arrow-down d-inline-flex align-items-center justify-content-center mx-2 w-38px h-38px btn p-0 btn-placeholder d-inline-block sort-dir-desc btn-arrow"
+                  data-toggle="tooltip"
+                  data-placement="bottom"
+                  title="DESC"
+                ></button>
+                <button
+                  type="button"
+                  class="fas fa-arrow-up d-inline-flex align-items-center justify-content-center w-38px h-38px btn p-0 btn-placeholder d-inline-block sort-dir-asc btn-arrow"
+                  data-toggle="tooltip"
+                  data-placement="bottom"
+                  title="ASC"
+                ></button>
+              </div>
+              <div class="text-right d-none">
+                <div
+                  class="d-inline-flex flex-column flex-lg-row align-items-lg-center text-left"
+                >
+                  <span
+                    class="fs-16 d-block d-lg-inline-block font-weight-medium text-primary mr-2"
+                  >
+                    ظهور:
+                  </span>
+                  <select id="" class="form-control show-limit">
+                    {{#limits}}
+                    <option value="{{text}}" {{#active}} selected="selected">
+                      {{/active}} >{{text}}
+                    </option>
+                    {{/limits}}
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12 px-0 px-lg-3">
+        <div class="pt-8"></div>
+        <div class="border-top border-placeholder pb-8"></div>
+      </div>
+    </div>
+    <div class="row" id="all-products">
+      {{#products}}
+
+      <div class="col-lg-3 col-sm-6 py-2 card-product">
+        <div
+          class="align-items-start d-flex flex-column m-0 product p-0"
+          data-product-id="{{id}}"
+          data-image="{{file_full_path}}"
+          data-price="{{final_price_number}}"
+          data-name="{{name}}"
+          data-brand="{{brand}}"
+          data-category="{{category}}"
+          data-stock-balance="{{stock_balance}}"
+        >
+          <a
+            href="/contents/product_view/{{id}}"
+            class="text-decoration-none text-primary text-hover-black w-100"
+          >
+            <img src="{{file_full_path}}" alt="" class="card-img" />
+            <h6 class="fs-18 font-weight-bold py-2 text-black px-2">
+              {{ name }}
+            </h6>
+            <h6 class="font-weight-bold fs-18 text-secondary ml-2 text-center">
+              {{product_code}}
+            </h6>
+          </a>
+          <!-- <p class="fs-16 fs-md-14 fs-xl-16 font-weight-medium text-body mb-3">
+            {{description}}
+          </p> -->
+
+          <p class="fs-14 font-weight-medium p-1 stock d-none">
+            متاح : {{stock_balance}}
+          </p>
+          <div class="text-right">
+            <div class="col-12 px-0">
+              <div class="m-0 p-1 font-weight-bold">
+                {{#discount}}
+                <span class="price fs-14 px-2">{{final_price}}</span>
+                <del class="color-second"
+                  ><span class="text-alto fs-14 mr-2 discount"
+                    >{{unit_price}}</span
+                  ></del
+                >
+                {{/discount}} {{^discount}}
+                <span class="color-second fs-lg-14 fs-10 px-1"
+                  >{{final_price}}</span
+                >
+                {{/discount}}
+              </div>
+            </div>
+          </div>
+          <button
+            data-name="{{name}}"
+            class="add-to-cart-btn btn btn-sm btn-action font-weight-semibold fs-lg-18 fs-14 mx-auto my-2 w-75 tw-rounded-full"
+          >
+            أضف للسلة
+          </button>
+        </div>
+      </div>
+      {{/products}} {{^products_count}}
+      <p>لا يوجد منتجات</p>
+      {{/products_count}}
+    </div>
+    {{#products_count}}
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="text-center pt-8">
+          <nav class="d-inline-flex mb-0 align-items-center">
+            <span
+              class="text-primary fs-16 mr-2 font-weight-medium d-none d-lg-inline-block"
+            >
+              صفحة:
+            </span>
+            <ul class="pagination mb-0">
+              {{#prevPage}}
+              <li class="page-item">
+                <a class="page-link" href="{{prevPageLink}}"
+                  ><i class="fa fas fa-arrow-left"></i
+                ></a>
+              </li>
+              {{/prevPage}} {{#pages}} {{#active}}
+              <li class="page-item active">
+                <a class="page-link" href="{{link}}"> {{page}} </a>
+              </li>
+              {{/active}} {{^active}}
+              <li class="page-item">
+                <a class="page-link" href="{{link}}"> {{page}} </a>
+              </li>
+              {{/active}} {{/pages}} {{#nextPage}}
+              <li class="page-item">
+                <a class="page-link" href="{{nextPageLink}}"
+                  ><i class="fas fa-arrow-right"></i
+                ></a>
+              </li>
+              {{/nextPage}}
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+    {{/products_count}}
+  </div>
+</div>
+<script>
+  $(document).ready(() => {
+    console.log("b");
+    setTimeout(() => {
+      var swiper = new Swiper(".swiper-cat", {
+        breakpoints: {
+          250: {
+            slidesPerView: 1,
+            spaceBetween: 0,
+          },
+          1300: {
+            slidesPerView: 3,
+            spaceBetween: 0,
+          },
+        },
+
+        reverseDirection: true,
+        navigation: {
+          nextEl: ".swiper-button-prev",
+          prevEl: ".swiper-button-next",
+        },
+      });
+    }, 2000);
+
+    let user = USER.client_id;
+    let check = $("#admin").text();
+    if (user == 0 && check == "5") {
+      $(".stock").removeClass("d-none");
+    }
+  });
+</script>

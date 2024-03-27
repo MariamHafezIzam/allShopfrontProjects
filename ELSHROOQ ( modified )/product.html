@@ -1,0 +1,267 @@
+<main id="main-content">
+  <style>
+    @media screen and (max-width: 600px) {
+      .swiper-button-prev-icon {
+        left: 0 !important;
+      }
+      .swiper-button-next-icon {
+        right: 0 !important;
+      }
+    }
+    @media screen and (max-width: 991px) {
+      #new_Price-mobile {
+        display: flex !important;
+      }
+      /* #new_Price-desktop {
+        display: none !important;
+      } */
+    }
+
+    #new_Price-desktop {
+      text-align: right;
+      padding-right: 12%;
+      height: 70px;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      color: #2a4aff;
+    }
+    #new_Price-mobile {
+      text-align: right;
+      padding-right: 12%;
+      height: 70px;
+      font-weight: bold;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+  </style>
+  <div class="pt-8" style="margin-bottom: 35px">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-5">
+          <div class="swiper-slider">
+            <div
+              class="swiper-container product-swiper swiper-container-initialized swiper-container-horizontal"
+              style="cursor: grab"
+            >
+              <div
+                class="swiper-wrapper"
+                style="
+                  transform: translate3d(0px, 0px, 0px);
+                  transition-duration: 0ms;
+                "
+              >
+                {{^product_images_count}}
+                <div
+                  class="swiper-slide swiper-slide-active"
+                  style="width: 540px"
+                >
+                  <a
+                    class="position-relative d-block w-100"
+                    href="#"
+                    disabled="true"
+                  >
+                    <img
+                      src="https://cdn.daftra.com/templates/shop_1/img/product_img.svg"
+                      alt="{{ product.name }}"
+                      class="img-fluid w-100 mx-auto img-cover product-img-lg"
+                    />
+                  </a>
+                  <div class="caption text-center">
+                    <h4>No Image Available</h4>
+                  </div>
+                </div>
+                {{/product_images_count}} {{#product_images_count}}
+                {{#product_images}}
+                <div
+                  class="swiper-slide swiper-slide-active"
+                  style="width: 540px"
+                >
+                  <a
+                    class="position-relative d-block w-100"
+                    href="{{.}}"
+                    data-fancybox="images"
+                  >
+                    <img
+                      src="{{.}}"
+                      alt="{{ product.name }}"
+                      class="img-fluid w-100 mx-auto img-cover product-img-lg"
+                    />
+                  </a>
+                </div>
+                {{/product_images}} {{/product_images_count}}
+              </div>
+              <span
+                class="swiper-notification"
+                aria-live="assertive"
+                aria-atomic="true"
+              ></span>
+            </div>
+            {{#product_images_count}}
+
+            <span
+              class="swiper-button-prev-icon swiper-button-disabled d-lg-flex d-none"
+              tabindex="0"
+              role="button"
+              aria-label="Previous slide"
+              aria-disabled="true"
+            >
+              <i
+                class="fas fa-arrow-left w-38px w-lg-42px h-38px h-lg-42px d-inline-flex align-items-center justify-content-center bg-primary bg-hover-primary-2 text-white"
+              ></i
+            ></span>
+            <span
+              class="swiper-button-next-icon d-lg-flex d-none"
+              tabindex="0"
+              role="button"
+              aria-label="Next slide"
+              aria-disabled="false"
+              ><i
+                class="fas fa-arrow-right w-38px w-lg-42px h-38px h-lg-42px d-inline-flex align-items-center justify-content-center bg-primary bg-hover-primary-2 text-white"
+              ></i
+            ></span>
+            {{/product_images_count}}
+          </div>
+        </div>
+        <div class="col-lg-1 d-none d-lg-flex"></div>
+        <div class="col-lg-6 pt-4 pt-lg-0">
+          <h6
+            class="fs-40 text-dark font-weight-extrabold mb-3"
+            style="text-align: right"
+          >
+            {{ product.name }}
+          </h6>
+          <h6 class="fs-20 text-body font-weight-medium mb-3">
+            {{ product.product_code }}
+          </h6>
+          <p
+            class="fs-16 font-weight-medium text-body d-none"
+            id="product_disc"
+          >
+            {{ product.description }}
+          </p>
+          <div class="mt-10 fs-16 text-dark font-weight-medium mb-8">
+            <!--
+                                  Custom Fields Will Go Here
+                                  <p><span class="text-body">Color: </span>Red</p>
+                          -->
+          </div>
+          <div
+            class="d-flex align-items-start align-items-lg-center justify-content-between flex-column flex-lg-row"
+          >
+            <div>
+              <span class="fs-32 color-second font-weight-bold price"
+                >{{ product.final_price_formatted }}</span
+              >
+              {{#product.has_discount}}
+              <del class="text-danger d-block"
+                ><span class="text-alto fs-14 mr-2 font-weight-extrabold"
+                  >{{ product.unit_price_formatted }}</span
+                ></del
+              >
+              {{/product.has_discount}}
+            </div>
+            <div
+              class="d-flex align-items-center"
+              data-product-id="{{ product.id }}"
+              data-image="{{ product_images.0 }}"
+              data-price="{{ product.final_price_number }}"
+              data-name="{{ product.name }}"
+            >
+              <div
+                class="input-group col cart-item-count px-0 px-lg-3 mr-2 mr-lg-0"
+              >
+                <div class="input-group-prepend">
+                  <button
+                    type="button"
+                    class="far fa-minus d-inline-flex align-items-center justify-content-center fs-13 w-38px w-lg-42px h-38px h-lg-42px btn p-0 btn-placeholder d-inline-block minus"
+                    style="background-color: #5bb0ba; border-radius: 5px"
+                  ></button>
+                </div>
+                <input
+                  type="text"
+                  class="form-control border-placeholder text-center w-38px w-lg-42px h-38px h-lg-42px p-0 qty"
+                  value="1"
+                  max="999"
+                  min="1"
+                  step="1"
+                />
+                <div class="input-group-append">
+                  <button
+                    type="button"
+                    class="far fa-plus d-inline-flex align-items-center justify-content-center fs-13 w-38px w-lg-42px h-38px h-lg-42px btn p-0 btn-placeholder d-inline-block plus"
+                    style="background-color: #5bb0ba; border-radius: 5px"
+                  ></button>
+                </div>
+              </div>
+              <button
+                style="border-radius: 13px"
+                class="add-to-cart-btn btn btn-sm btn-primary text-uppercase font-weight-medium fs-16"
+              >
+                <i class="fal fa-cart-plus mr-2"></i>اضافة الي العربة
+              </button>
+            </div>
+          </div>
+          <div
+            class="fs-32  font-weight-bold price"
+            id="new_Price-desktop"
+          ></div>
+          <div
+            class="color-second font-weight-bold price"
+            style="font-size: 18px"
+            id="factory-slogan"
+          ></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    var settings = {
+      method: "GET",
+      headers: {
+        APIKEY: "2b0750639236167532feb564896822d54096eff8",
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    };
+
+    if (USER.client_id != 0) {
+      settings.url = `https://www.elshoroukshop.online/v2/api/entity/client/${USER.client_id}`;
+    }
+    $.ajax(settings)
+      .then((client) => {
+        settings.url = `https://www.elshoroukshop.online/v2/api/entity/product/${
+          window.location.href.split("/")[5]
+        }`;
+        $.ajax(settings).then((product) => {
+          console.log(product);
+          if (product.description) {
+            let desc = product.description.split("\r\n");
+
+            document.querySelector("#factory-slogan").innerHTML = `الوصف \n`;
+            for (let i = 0; i < desc.length; i++) {
+              document.querySelector(
+                "#factory-slogan"
+              ).innerHTML += `<p style="margin-right:50px">${desc[i]}</p>`;
+            }
+          } else {
+            document.querySelector("#factory-slogan").innerHTML = `الوصف \n`;
+          }
+
+          if (client.custom_data.field_91 == "ديلر") {
+            document.querySelector(
+              "#new_Price-desktop"
+            ).innerText = `${product.custom_data.field_92}`;
+            document.querySelector(
+              "#new_Price-mobile"
+            ).innerText = `${product.custom_data.field_92}`;
+          }
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  </script>
+</main>

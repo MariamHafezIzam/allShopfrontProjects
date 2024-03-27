@@ -1,0 +1,68 @@
+<style>
+    .swiper-pagination-bullet {
+      width: 9px !important;
+      height: 9px !important;
+      display: inline-block !important;
+      border-radius: 100% !important;
+      background: #fff !important;
+      opacity: 0.5 !important;
+      transition: all 0.2s ease-in-out !important;
+    }
+  
+    .swiper-pagination-bullet-active {
+      opacity: 1 !important  ;
+      background: #fff !important;
+      border-radius: 8px !important;
+      box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+      width: 21px !important;
+    }
+    .swiper-container-horizontal
+      > .swiper-pagination-bullets
+      .swiper-pagination-bullet {
+      margin: 0 4px !important;
+    }
+  
+    @media only screen and (max-width: 991px) {
+      .home-slide.swiper-slide {
+        border-radius: 0px !important;
+      }
+      #home-slider-section .home-slide {
+        height: 180px !important;
+      }
+    }
+  </style>
+  <div id="home-slider-section" class="pt-lg-7">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 px-0 px-lg-3">
+          <div class="swiper-slider">
+            <div class="swiper-container home-swiper">
+              <div class="swiper-wrapper" style="border-radius: 15px">
+                {{#items}}
+                <div
+                  class="home-slide swiper-slide"
+                  style=" border-radius: 15px ;border: 1px solid #F6C8CC;background-image: url({{file}})"
+                >
+                  <div class="container">
+                    <div class="row">
+                      <div class="col-lg-7">
+                        <div class="text-center">
+                          <h1
+                            class="fs-22 fs-lg-28 fs-xl-58 py-5 font-weight-bold text-white"
+                          ></h1>
+                        </div>
+                      </div>
+                      <div class="col-lg-5"></div>
+                    </div>
+                  </div>
+                </div>
+                {{/items}}
+              </div>
+              <div class="swiper-pagination-bullets"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

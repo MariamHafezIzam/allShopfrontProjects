@@ -1,0 +1,97 @@
+<div id="site-sidebar">
+  <div class="side-sidebar-wrap">
+    <div class="side-sidebar-header">
+      <button
+        type="button"
+        class="cart-toggle-btn btn p-0 font-weight-semibold d-inline-flex align-items-center fs-16 text-dark text-hover-primary"
+      >
+        <i class="fas fa-arrow-circle-left mr-2 fs-18"></i>عربة التسوق
+      </button>
+    </div>
+    <div class="side-sidebar-body my-5">
+      <div class="cart-items">
+        <div style="display: none" class="cart-item">
+          <button
+            class="btn text-danger-30 text-hover-danger fs-16 p-0 mr-4 tip remove-cart-item"
+            title="أزالة منتج"
+          >
+            <i class="fas fa-trash-alt"></i>
+          </button>
+          <div class="cart-item-details">
+            <a href="#">
+              <img
+                src=""
+                width="64"
+                height="58"
+                alt="إسم المنتج"
+                class="cart-item-image"
+              />
+            </a>
+            <div class="flex-grow-1 ml-3">
+              <a href="#" class="text-dark"
+                ><h4 class="fs-16 font-weight-semibold cart-item-name"></h4
+              ></a>
+              <div
+                class="mt-2 d-flex align-items-center justify-content-between"
+              >
+                <span
+                  class="text-alto font-weight-semibold cart-item-price"
+                ></span>
+                <div class="cart-item-count">
+                  <button
+                    class="btn p-0 fas fa-minus-circle fs-16 text-alto text-hover-primary minus"
+                  ></button>
+                  <input
+                    type="number"
+                    value=""
+                    class="form-control qty cart-item-qty"
+                    min="1"
+                    step="1"
+                    disabled
+                  />
+                  <button
+                    class="btn p-0 fas fa-plus-circle fs-16 text-alto text-hover-primary plus"
+                  ></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="empty-cart-text"></div>
+      <div class="cart-subtotal">
+        <span class="font-weight-medium text-dark mr-3 qty-subtotal">
+          إجمالى ({{cart_items_count}} منتجات)
+        </span>
+        <span class="cart-total font-weight-bold text-primary fs-24"> </span>
+      </div>
+    </div>
+    <div class="side-sidebar-footer">
+      <button
+        id="checkout-fakeBtn"
+        class="btn btn-primary d-flex align-items-center justify-content-between btn-block px-4 py-3 text-uppercase fs-16 font-weight-medium btn-lg mt-auto"
+      >
+        <span>الدفع</span>
+        <span class="fas fa-arrow-square-right"></span>
+      </button>
+      <a
+        id="checkout-btn"
+        href="/client/contents/order_summary"
+        class="disabled d-none btn btn-primary align-items-center justify-content-between btn-block px-4 py-3 text-uppercase fs-16 font-weight-medium btn-lg mt-auto"
+      >
+        <span>الدفع</span>
+        <span class="fas fa-arrow-square-right"></span>
+      </a>
+    </div>
+  </div>
+</div>
+<script>
+  $(document).ready(() => {
+    console.log($(".cart-items").text().trim());
+    if ($(".cart-items").text().trim() == "") {
+      $("#checkout-fakeBtn").addClass("disabled");
+    } else {
+      console.log("DFGHJKJHGFDSDFGHJ");
+    }
+  });
+</script>

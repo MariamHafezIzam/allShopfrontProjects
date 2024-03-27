@@ -1,0 +1,55 @@
+<div id="thankyou-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-xl-3 col-lg-2"></div>
+      <div class="col-xl-6 col-lg-8">
+        <div class="text-center pt-18">
+          <div class="text-success mb-4">
+            <i class="far fa-check-circle fs-73 mb-3"></i>
+            <h2 class="fs-30 fs-lg-40 font-weight-extrabold">
+              شكرًا لك على شرائك!
+            </h2>
+          </div>
+          <p class="fs-16 fs-lg-22 font-weight-semibold text-dark mb-15">
+            تم إكمال طلبك بنجاح.
+          </p>
+          <a
+            href="/home"
+            class="btn btn-link fs-16 font-weight-semibold text-dark text-hover-primary"
+            ><i class="fas fa-home fs-20 mr-2"></i
+            ><span>العودة للرئيسية</span></a
+          >
+        </div>
+      </div>
+      <div class="col-xl-3 col-lg-2"></div>
+    </div>
+  </div>
+</div>
+<script>
+  $(document).ready(() => {
+    let url = window.location.href;
+    url = url.split("=");
+    let invID = url[1];
+    let invoice = {
+      no: invID,
+      follow_up_status: 21,
+      draft: 0,
+    };
+    $.ajax({
+      url: `/v2/api/entity/invoice/${invID}/fields`,
+      method: "POST",
+      headers: {
+        APIKEY: "2b0750639236167532feb564896822d54096eff8",
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      data: JSON.stringify(invoice),
+      success: function (response) {
+        console.log(response);
+      },
+      error: function (error) {
+        console.error(error);
+      },
+    });
+  });
+</script>

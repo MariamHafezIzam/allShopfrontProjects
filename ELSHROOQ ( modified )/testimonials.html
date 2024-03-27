@@ -1,0 +1,1132 @@
+<style>
+  .row-swiper .swiper {
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  .row-swiper .swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    background-color: transparent;
+
+    /* Center slide text vertically */
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+  }
+
+  .row-swiper .swiper-slide img {
+    display: block;
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+  }
+  .swiper-button-next,
+  .swiper-button-prev {
+    background-image: none !important;
+    background-color: #5bb0ba;
+    color: #fff;
+    display: flex !important;
+  }
+  .row-swiper .swiper-button-next {
+    background-image: none;
+    display: flex !important;
+  }
+  .row-swiper .swiper-button-prev,
+  .row-swiper .swiper-rtl .swiper-button-next {
+    background-color: #5bb0ba !important;
+    color: #fff !important;
+    display: flex !important;
+  }
+  #mySwiper .swiper-slide {
+    margin: 0px !important;
+  }
+  .swiper-button-next:after,
+  .swiper-button-prev:after {
+    color: #fff !important;
+    background-color: #5bb0ba !important;
+    font-size: 26px !important;
+    font-weight: 600;
+  }
+  .swiper-button-next,
+  .swiper-button-prev {
+    height: 37px !important;
+    width: 38px !important;
+  }
+  .custom_content .swiper-button-prev,
+  .custom_content .swiper-rtl .custom_content .swiper-button-next {
+    color: #fff !important;
+    background-color: #5bb0ba !important;
+  }
+  .swiper-button-prev:hover {
+    border-color: #5bb0ba !important;
+  }
+  .swiper-button-prev {
+    margin-right: 15px !important;
+  }
+  .swiper-button-next {
+    margin-left: 15px !important;
+  }
+
+  @media only screen and (max-width: 991px) {
+    .swiper-button-next:after,
+    .swiper-button-prev:after {
+      font-size: 20px !important;
+      font-weight: 600;
+    }
+    .swiper-button-next,
+    .swiper-button-prev {
+      height: 30px !important;
+      width: 30px !important;
+    }
+
+    .swiper-button-prev {
+      margin-right: 5px !important;
+    }
+    .swiper-button-next {
+      margin-left: 5px !important;
+    }
+  }
+  .testSwiper {
+    overflow: hidden;
+  }
+
+  .swiper-pagination {
+    left: 50%;
+  }
+
+  span.swiper-pagination-bullet.swiper-pagination-bullet-active {
+    background: #c15b78 !important;
+  }
+
+  .swiper-pagination-bullet {
+    background: #f8dbde !important;
+    opacity: 1 !important;
+  }
+
+  .swiper-pagination-clickable .swiper-pagination-bullet {
+    margin: 0 10px !important ;
+  }
+
+  .bottom-arrow {
+    width: 0 !important;
+    height: 0px !important;
+    background: transparent !important;
+    border-left: 10px solid transparent !important;
+    border-right: 10px solid transparent !important ;
+    border-bottom: 10px solid transparent !important;
+    border-top: 15px solid #f8dbde !important;
+    position: absolute !important;
+    top: 100% !important;
+    left: 84% !important;
+  }
+
+  .icon {
+    position: relative;
+    border: 1px solid #c15b78 !important;
+    border-radius: 5px !important;
+    padding: 25px !important ;
+    box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.5) !important;
+    margin-bottom: 10px !important;
+  }
+
+  .stars i {
+    font-size: 13px !important;
+    color: #fcd53f !important;
+  }
+  .review-img {
+    width: 60px !important;
+    height: 60px !important;
+    border-radius: 50% !important;
+  }
+</style>
+
+<div
+  class="container"
+  style="overflow: hidden; direction: rtl; text-align: right"
+>
+  <div class="py-4">
+    <div id="" class="pb-4">
+      <div class="container px-0" style="max-width: 100%; margin: auto">
+        <div class="row row-swiper px-3 mx-0 px-lg-0">
+          <div class="d-flex w-100 py-2" style="justify-content: space-between">
+            <div>
+              <h3
+                class="title font-weight-semibold my-0 px-0 fs-22 text-primary"
+              >
+                أراء العملاء
+              </h3>
+            </div>
+
+            <div style="position: relative; width: 90%">
+              <div class="swiper-button-next">
+                <i class="fas fa-chevron-left fs-16 pr-2 pt-1"></i>
+              </div>
+              <div class="swiper-button-prev">
+                <i class="fas fa-chevron-right fs-16 pr-2 pt-1"></i>
+              </div>
+            </div>
+          </div>
+          <div class="swiper mySwiper testSwiper" id="mySwiper">
+            <div class="swiper-wrapper">
+              <!--------------- Review 1 ----------------------->
+              <div
+                class="swiper-slide col-lg-4 col-12 col py-2 px-lg-4 px-1 card-product box"
+              >
+                <div class="item hover w-100">
+                  <div class="icon">
+                    <div class="bottom-arrow"></div>
+                    <i
+                      class="fa fa-quote-right"
+                      style="font-size: 35px; color: #f8dbde"
+                    ></i>
+                    <p style="font-size: 16px; margin: 10px 0">
+                      احسن سعر وخامه جميله اول مره اتعامل معاكم وان شاء الله مش
+                      اخر مره بالتوفيق 👏 ♥️
+                    </p>
+                  </div>
+
+                  <div class="d-flex my-3">
+                    <img
+                      src="https://cdn.assets.salla.network/stores/themes/default/assets/images/avatar_male.png"
+                      alt=""
+                      class="review-img"
+                    />
+                    <div class="ml-2">
+                      <span style="margin-bottom: 5px; display: block">
+                        وسام القاضى</span
+                      >
+                      <ul class="d-flex p-0 stars">
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--------------- Review 2 ----------------------->
+              <div
+                class="swiper-slide col-lg-4 col-12 col py-2 px-lg-4 px-1 card-product box"
+              >
+                <div class="item hover w-100">
+                  <div class="icon">
+                    <div class="bottom-arrow"></div>
+                    <i
+                      class="fa fa-quote-right"
+                      style="font-size: 35px; color: #f8dbde"
+                    ></i>
+                    <p style="font-size: 16px; margin: 10px 0">
+                      التزام بالمواعيد ومصداقية وحسن تعامل 🌺🌺🌺
+                    </p>
+                  </div>
+
+                  <div class="d-flex my-3">
+                    <img
+                      src="https://cdn.assets.salla.network/stores/themes/default/assets/images/avatar_female.png"
+                      alt=""
+                      class="review-img"
+                    />
+                    <div class="ml-2">
+                      <span style="margin-bottom: 5px; display: block">
+                        سمر اشرف
+                      </span>
+                      <ul class="d-flex p-0 stars">
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--------------- Review 3 ----------------------->
+              <div
+                class="swiper-slide col-lg-4 col-12 col py-2 px-lg-4 px-1 card-product box"
+              >
+                <div class="item hover w-100">
+                  <div class="icon">
+                    <div class="bottom-arrow"></div>
+                    <i
+                      class="fa fa-quote-right"
+                      style="font-size: 35px; color: #f8dbde"
+                    ></i>
+                    <p style="font-size: 16px; margin: 10px 0">
+                      جميل جدااا الحاجه وصلت زي ما طلبتها واجمل كمان اللهم بارك
+                      😍😍😍
+                    </p>
+                  </div>
+
+                  <div class="d-flex my-3">
+                    <img
+                      src="https://cdn.assets.salla.network/stores/themes/default/assets/images/avatar_female.png"
+                      alt=""
+                      class="review-img"
+                    />
+                    <div class="ml-2">
+                      <span style="margin-bottom: 5px; display: block">
+                        اميرة احمد</span
+                      >
+                      <ul class="d-flex p-0 stars">
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--------------- Review 4 ----------------------->
+              <div
+                class="swiper-slide col-lg-4 col-12 col py-2 px-lg-4 px-1 card-product box"
+              >
+                <div class="item hover w-100">
+                  <div class="icon">
+                    <div class="bottom-arrow"></div>
+                    <i
+                      class="fa fa-quote-right"
+                      style="font-size: 35px; color: #f8dbde"
+                    ></i>
+                    <p style="font-size: 16px; margin: 10px 0">
+                      خدمة العملاء متعاونة و سريعه متابعه معايا خطوه بخطوه لحد
+                      ما استلمت 🥰♥️⭐
+                    </p>
+                  </div>
+
+                  <div class="d-flex my-3">
+                    <img
+                      src="https://cdn.assets.salla.network/stores/themes/default/assets/images/avatar_female.png"
+                      alt=""
+                      class="review-img"
+                    />
+                    <div class="ml-2">
+                      <span style="margin-bottom: 5px; display: block">
+                        نجلاء بدوى</span
+                      >
+                      <ul class="d-flex p-0 stars">
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--------------- Review 5 ----------------------->
+              <div
+                class="swiper-slide col-lg-4 col-12 col py-2 px-lg-4 px-1 card-product box"
+              >
+                <div class="item hover w-100">
+                  <div class="icon">
+                    <div class="bottom-arrow"></div>
+                    <i
+                      class="fa fa-quote-right"
+                      style="font-size: 35px; color: #f8dbde"
+                    ></i>
+                    <p style="font-size: 16px; margin: 10px 0">
+                      ذوق فى التعامل ومقاسات مظبوطه وخامات عاليه 👑👑👑
+                    </p>
+                  </div>
+
+                  <div class="d-flex my-3">
+                    <img
+                      src="https://cdn.assets.salla.network/stores/themes/default/assets/images/avatar_female.png"
+                      alt=""
+                      class="review-img"
+                    />
+                    <div class="ml-2">
+                      <span style="margin-bottom: 5px; display: block">
+                        ساره عبدالسلام</span
+                      >
+                      <ul class="d-flex p-0 stars">
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--------------- Review 6 ----------------------->
+              <div
+                class="swiper-slide col-lg-4 col-12 col py-2 px-lg-4 px-1 card-product box"
+              >
+                <div class="item hover w-100">
+                  <div class="icon">
+                    <div class="bottom-arrow"></div>
+                    <i
+                      class="fa fa-quote-right"
+                      style="font-size: 35px; color: #f8dbde"
+                    ></i>
+                    <p style="font-size: 16px; margin: 10px 0">
+                      مكان كبير تتعامل معاه وانت مطمن وفى كل حاجة هتحتاجها👏💪
+                    </p>
+                  </div>
+
+                  <div class="d-flex my-3">
+                    <img
+                      src="https://cdn.assets.salla.network/stores/themes/default/assets/images/avatar_male.png"
+                      alt=""
+                      class="review-img"
+                    />
+                    <div class="ml-2">
+                      <span style="margin-bottom: 5px; display: block">
+                        محمد على</span
+                      >
+                      <ul class="d-flex p-0 stars">
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--------------- Review 7 ----------------------->
+              <div
+                class="swiper-slide col-lg-4 col-12 col py-2 px-lg-4 px-1 card-product box"
+              >
+                <div class="item hover w-100">
+                  <div class="icon">
+                    <div class="bottom-arrow"></div>
+                    <i
+                      class="fa fa-quote-right"
+                      style="font-size: 35px; color: #f8dbde"
+                    ></i>
+                    <p style="font-size: 16px; margin: 10px 0">
+                      مقابلتش مشكلة فى التبديل والمرتجع الحمدلله والمعاملة جميلة
+                      ☺️
+                    </p>
+                  </div>
+
+                  <div class="d-flex my-3">
+                    <img
+                      src="https://cdn.assets.salla.network/stores/themes/default/assets/images/avatar_female.png"
+                      alt=""
+                      class="review-img"
+                    />
+                    <div class="ml-2">
+                      <span style="margin-bottom: 5px; display: block">
+                        فاتن زكريا</span
+                      >
+                      <ul class="d-flex p-0 stars">
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--------------- Review 8 ----------------------->
+              <div
+                class="swiper-slide col-lg-4 col-12 col py-2 px-lg-4 px-1 card-product box"
+              >
+                <div class="item hover w-100">
+                  <div class="icon">
+                    <div class="bottom-arrow"></div>
+                    <i
+                      class="fa fa-quote-right"
+                      style="font-size: 35px; color: #f8dbde"
+                    ></i>
+                    <p style="font-size: 16px; margin: 10px 0">
+                      متعاونين واحسن واسرع خدمه عملاء ممكن تتعامل معاه عموما
+                    </p>
+                  </div>
+
+                  <div class="d-flex my-3">
+                    <img
+                      src="https://cdn.assets.salla.network/stores/themes/default/assets/images/avatar_female.png"
+                      alt=""
+                      class="review-img"
+                    />
+                    <div class="ml-2">
+                      <span style="margin-bottom: 5px; display: block">
+                        بثينه رشوان</span
+                      >
+                      <ul class="d-flex p-0 stars">
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--------------- Review 9 ----------------------->
+              <div
+                class="swiper-slide col-lg-4 col-12 col py-2 px-lg-4 px-1 card-product box"
+              >
+                <div class="item hover w-100">
+                  <div class="icon">
+                    <div class="bottom-arrow"></div>
+                    <i
+                      class="fa fa-quote-right"
+                      style="font-size: 35px; color: #f8dbde"
+                    ></i>
+                    <p style="font-size: 16px; margin: 10px 0">
+                      كان فيه سرعه فى التواصل و حل مشكلة المقاس والتبديل . شكراً
+                      💖
+                    </p>
+                  </div>
+
+                  <div class="d-flex my-3">
+                    <img
+                      src="https://cdn.assets.salla.network/stores/themes/default/assets/images/avatar_female.png"
+                      alt=""
+                      class="review-img"
+                    />
+                    <div class="ml-2">
+                      <span style="margin-bottom: 5px; display: block">
+                        اشرقت جلال</span
+                      >
+                      <ul class="d-flex p-0 stars">
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--------------- Review 10 ----------------------->
+              <div
+                class="swiper-slide col-lg-4 col-12 col py-2 px-lg-4 px-1 card-product box"
+              >
+                <div class="item hover w-100">
+                  <div class="icon">
+                    <div class="bottom-arrow"></div>
+                    <i
+                      class="fa fa-quote-right"
+                      style="font-size: 35px; color: #f8dbde"
+                    ></i>
+                    <p style="font-size: 16px; margin: 10px 0">
+                      هنصح كل صاحبى ومعارفى بمتجر الشروق 🌹🌹🌹
+                    </p>
+                  </div>
+
+                  <div class="d-flex my-3">
+                    <img
+                      src="https://cdn.assets.salla.network/stores/themes/default/assets/images/avatar_female.png"
+                      alt=""
+                      class="review-img"
+                    />
+                    <div class="ml-2">
+                      <span style="margin-bottom: 5px; display: block">
+                        آلاء جمال</span
+                      >
+                      <ul class="d-flex p-0 stars">
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--------------- Review 11 ----------------------->
+              <div
+                class="swiper-slide col-lg-4 col-12 col py-2 px-lg-4 px-1 card-product box"
+              >
+                <div class="item hover w-100">
+                  <div class="icon">
+                    <div class="bottom-arrow"></div>
+                    <i
+                      class="fa fa-quote-right"
+                      style="font-size: 35px; color: #f8dbde"
+                    ></i>
+                    <p style="font-size: 16px; margin: 10px 0">
+                      شكرا لذوقكم وقبول المرتجع بدون اي مشكله والمعاملة أكثر من
+                      رائعة♥️
+                    </p>
+                  </div>
+
+                  <div class="d-flex my-3">
+                    <img
+                      src="https://cdn.assets.salla.network/stores/themes/default/assets/images/avatar_female.png"
+                      alt=""
+                      class="review-img"
+                    />
+                    <div class="ml-2">
+                      <span style="margin-bottom: 5px; display: block">
+                        فاطمة خالد</span
+                      >
+                      <ul class="d-flex p-0 stars">
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--------------- Review 12 ----------------------->
+              <div
+                class="swiper-slide col-lg-4 col-12 col py-2 px-lg-4 px-1 card-product box"
+              >
+                <div class="item hover w-100">
+                  <div class="icon">
+                    <div class="bottom-arrow"></div>
+                    <i
+                      class="fa fa-quote-right"
+                      style="font-size: 35px; color: #f8dbde"
+                    ></i>
+                    <p style="font-size: 16px; margin: 10px 0">
+                      مريحين فى التعامل لاقصي درجه ومتعاونين جدا حقيقي يستاهلوا
+                      10 من 10 ربنا يوفقهم
+                    </p>
+                  </div>
+
+                  <div class="d-flex my-3">
+                    <img
+                      src="https://cdn.assets.salla.network/stores/themes/default/assets/images/avatar_male.png"
+                      alt=""
+                      class="review-img"
+                    />
+                    <div class="ml-2">
+                      <span style="margin-bottom: 5px; display: block">
+                        الكابتن / على</span
+                      >
+                      <ul class="d-flex p-0 stars">
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--------------- Review 13 ----------------------->
+              <div
+                class="swiper-slide col-lg-4 col-12 col py-2 px-lg-4 px-1 card-product box"
+              >
+                <div class="item hover w-100">
+                  <div class="icon">
+                    <div class="bottom-arrow"></div>
+                    <i
+                      class="fa fa-quote-right"
+                      style="font-size: 35px; color: #f8dbde"
+                    ></i>
+                    <p style="font-size: 16px; margin: 10px 0">
+                      طلبت من عندهم دريس والمقاس مظبطش معايا تواصلت معاهم
+                      وبدلهولي في الحال شكرا لتعاونكم 💖
+                    </p>
+                  </div>
+
+                  <div class="d-flex my-3">
+                    <img
+                      src="https://cdn.assets.salla.network/stores/themes/default/assets/images/avatar_female.png"
+                      alt=""
+                      class="review-img"
+                    />
+                    <div class="ml-2">
+                      <span style="margin-bottom: 5px; display: block">
+                        اسماء ربيع
+                      </span>
+                      <ul class="d-flex p-0 stars">
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--------------- Review 14 ----------------------->
+              <div
+                class="swiper-slide col-lg-4 col-12 col py-2 px-lg-4 px-1 card-product box"
+              >
+                <div class="item hover w-100">
+                  <div class="icon">
+                    <div class="bottom-arrow"></div>
+                    <i
+                      class="fa fa-quote-right"
+                      style="font-size: 35px; color: #f8dbde"
+                    ></i>
+                    <p style="font-size: 16px; margin: 10px 0">
+                      استلمت الاوردر النهاردة و بجد تحفه تحفه مقاس و ماتريال و
+                      التعامل بجد مش اخر مره انبهرت بالموديل و الماتريال ربنا
+                      يباركلكم❤️❤️❤️
+                    </p>
+                  </div>
+
+                  <div class="d-flex my-3">
+                    <img
+                      src="https://cdn.assets.salla.network/stores/themes/default/assets/images/avatar_female.png"
+                      alt=""
+                      class="review-img"
+                    />
+                    <div class="ml-2">
+                      <span style="margin-bottom: 5px; display: block">
+                        شروق شريف</span
+                      >
+                      <ul class="d-flex p-0 stars">
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--------------- Review 15 ----------------------->
+              <div
+                class="swiper-slide col-lg-4 col-12 col py-2 px-lg-4 px-1 card-product box"
+              >
+                <div class="item hover w-100">
+                  <div class="icon">
+                    <div class="bottom-arrow"></div>
+                    <i
+                      class="fa fa-quote-right"
+                      style="font-size: 35px; color: #f8dbde"
+                    ></i>
+                    <p style="font-size: 16px; margin: 10px 0">
+                      بجد اللهم بارك الاوردر وصلنى ع الطبيعه احلى بكتييير جربوه
+                      مش هتندموا 🤍🤍🤍
+                    </p>
+                  </div>
+
+                  <div class="d-flex my-3">
+                    <img
+                      src="https://cdn.assets.salla.network/stores/themes/default/assets/images/avatar_female.png"
+                      alt=""
+                      class="review-img"
+                    />
+                    <div class="ml-2">
+                      <span style="margin-bottom: 5px; display: block">
+                        آلاء حسن</span
+                      >
+                      <ul class="d-flex p-0 stars">
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--------------- Review 16 ----------------------->
+              <div
+                class="swiper-slide col-lg-4 col-12 col py-2 px-lg-4 px-1 card-product box"
+              >
+                <div class="item hover w-100">
+                  <div class="icon">
+                    <div class="bottom-arrow"></div>
+                    <i
+                      class="fa fa-quote-right"
+                      style="font-size: 35px; color: #f8dbde"
+                    ></i>
+                    <p style="font-size: 16px; margin: 10px 0">
+                      من اول مره طلبت فيها والحاجة وصلت احلى مما توقعت وانا
+                      مبقتش اشتري غير من عندكم 💜
+                    </p>
+                  </div>
+
+                  <div class="d-flex my-3">
+                    <img
+                      src="https://cdn.assets.salla.network/stores/themes/default/assets/images/avatar_female.png"
+                      alt=""
+                      class="review-img"
+                    />
+                    <div class="ml-2">
+                      <span style="margin-bottom: 5px; display: block">
+                        نادية فرغلي</span
+                      >
+                      <ul class="d-flex p-0 stars">
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--------------- Review 17 ----------------------->
+              <div
+                class="swiper-slide col-lg-4 col-12 col py-2 px-lg-4 px-1 card-product box"
+              >
+                <div class="item hover w-100">
+                  <div class="icon">
+                    <div class="bottom-arrow"></div>
+                    <i
+                      class="fa fa-quote-right"
+                      style="font-size: 35px; color: #f8dbde"
+                    ></i>
+                    <p style="font-size: 16px; margin: 10px 0">
+                      الاوردر تحفه مشاء الله خامه جميله والاوردر متاخرش وصل قبل
+                      معادة كمان دي مش اول مرة اشتري حاجة اون لاين بس اول مرة
+                      اجيب حاجة جميلة كدة وخامتها تحفه تسلموا بجد وان شاء الله
+                      مش اخر تعامل بينا 😍❤️
+                    </p>
+                  </div>
+
+                  <div class="d-flex my-3">
+                    <img
+                      src="https://cdn.assets.salla.network/stores/themes/default/assets/images/avatar_female.png"
+                      alt=""
+                      class="review-img"
+                    />
+                    <div class="ml-2">
+                      <span style="margin-bottom: 5px; display: block">
+                        هند مصطفى</span
+                      >
+                      <ul class="d-flex p-0 stars">
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--------------- Review 18 ----------------------->
+              <div
+                class="swiper-slide col-lg-4 col-12 col py-2 px-lg-4 px-1 card-product box"
+              >
+                <div class="item hover w-100">
+                  <div class="icon">
+                    <div class="bottom-arrow"></div>
+                    <i
+                      class="fa fa-quote-right"
+                      style="font-size: 35px; color: #f8dbde"
+                    ></i>
+                    <p style="font-size: 16px; margin: 10px 0">
+                      العباية روعة و نفس الصورة بالظبط 🥰 ال quality حلوة و
+                      السعر ممتاز و ناس ذوق جدًا في التعامل 🌹
+                    </p>
+                  </div>
+
+                  <div class="d-flex my-3">
+                    <img
+                      src="https://cdn.assets.salla.network/stores/themes/default/assets/images/avatar_female.png"
+                      alt=""
+                      class="review-img"
+                    />
+                    <div class="ml-2">
+                      <span style="margin-bottom: 5px; display: block">
+                        تهانى عبدالعزيز</span
+                      >
+                      <ul class="d-flex p-0 stars">
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--------------- Review 19 ----------------------->
+              <div
+                class="swiper-slide col-lg-4 col-12 col py-2 px-lg-4 px-1 card-product box"
+              >
+                <div class="item hover w-100">
+                  <div class="icon">
+                    <div class="bottom-arrow"></div>
+                    <i
+                      class="fa fa-quote-right"
+                      style="font-size: 35px; color: #f8dbde"
+                    ></i>
+                    <p style="font-size: 16px; margin: 10px 0">
+                      مش اول ولا اخر تعامل اكيد .. خامات و كواليتى و شياكة وذوق
+                      فى التعامل والالتزام بالمواعيد .. وطبعا اسعار احلى واحلى
+                    </p>
+                  </div>
+
+                  <div class="d-flex my-3">
+                    <img
+                      src="https://cdn.assets.salla.network/stores/themes/default/assets/images/avatar_male.png"
+                      alt=""
+                      class="review-img"
+                    />
+                    <div class="ml-2">
+                      <span style="margin-bottom: 5px; display: block">
+                        سامح العجوز</span
+                      >
+                      <ul class="d-flex p-0 stars">
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--------------- Review 20 ----------------------->
+              <div
+                class="swiper-slide col-lg-4 col-12 col py-2 px-lg-4 px-1 card-product box"
+              >
+                <div class="item hover w-100">
+                  <div class="icon">
+                    <div class="bottom-arrow"></div>
+                    <i
+                      class="fa fa-quote-right"
+                      style="font-size: 35px; color: #f8dbde"
+                    ></i>
+                    <p style="font-size: 16px; margin: 10px 0">
+                      بجد الحاجه بتعتهم خطيرة وجميله جدا وخامتها حلوة اوى 🩷🫶🏻
+                    </p>
+                  </div>
+
+                  <div class="d-flex my-3">
+                    <img
+                      src="https://cdn.assets.salla.network/stores/themes/default/assets/images/avatar_female.png"
+                      alt=""
+                      class="review-img"
+                    />
+                    <div class="ml-2">
+                      <span style="margin-bottom: 5px; display: block">
+                        ميرنا سمير</span
+                      >
+                      <ul class="d-flex p-0 stars">
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--------------- Review 21 ----------------------->
+              <div
+                class="swiper-slide col-lg-4 col-12 col py-2 px-lg-4 px-1 card-product box"
+              >
+                <div class="item hover w-100">
+                  <div class="icon">
+                    <div class="bottom-arrow"></div>
+                    <i
+                      class="fa fa-quote-right"
+                      style="font-size: 35px; color: #f8dbde"
+                    ></i>
+                    <p style="font-size: 16px; margin: 10px 0">
+                      الاوردر وصل النهاردة.. بجد حلو اوي . .. و اكتر حاجة
+                      مميزاكم شياكة التعامل.. وان لو معجبكيش المنتج تقدري
+                      ترجعيه.. شكرا جدا مش هتكون اخر مرة ان شاء الله 🤍🤍
+                    </p>
+                  </div>
+
+                  <div class="d-flex my-3">
+                    <img
+                      src="https://cdn.assets.salla.network/stores/themes/default/assets/images/avatar_female.png"
+                      alt=""
+                      class="review-img"
+                    />
+                    <div class="ml-2">
+                      <span style="margin-bottom: 5px; display: block">
+                        فاطمة فاضل</span
+                      >
+                      <ul class="d-flex p-0 stars">
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--------------- Review 22 ----------------------->
+              <div
+                class="swiper-slide col-lg-4 col-12 col py-2 px-lg-4 px-1 card-product box"
+              >
+                <div class="item hover w-100">
+                  <div class="icon">
+                    <div class="bottom-arrow"></div>
+                    <i
+                      class="fa fa-quote-right"
+                      style="font-size: 35px; color: #f8dbde"
+                    ></i>
+                    <p style="font-size: 16px; margin: 10px 0">
+                      حابة اشكركم على الذوق والرقي فالتعامل وسعيكم لحل اي مشكلة
+                      خاصة بالعميل بكل لطف .. إن شاء الله مش آخر تعامل 🥰
+                    </p>
+                  </div>
+
+                  <div class="d-flex my-3">
+                    <img
+                      src="https://cdn.assets.salla.network/stores/themes/default/assets/images/avatar_female.png"
+                      alt=""
+                      class="review-img"
+                    />
+                    <div class="ml-2">
+                      <span style="margin-bottom: 5px; display: block">
+                        يارا احمد</span
+                      >
+                      <ul class="d-flex p-0 stars">
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  var swiper = new Swiper(".testSwiper", {
+    breakpoints: {
+      250: {
+        slidesPerView: 1,
+        spaceBetween: 0,
+      },
+      1300: {
+        slidesPerView: 3,
+        spaceBetween: 0,
+      },
+    },
+    autoplay: {
+      delay: 5000,
+    },
+    reverseDirection: true,
+    navigation: {
+      nextEl: ".swiper-button-prev",
+      prevEl: ".swiper-button-next",
+    },
+  });
+</script>

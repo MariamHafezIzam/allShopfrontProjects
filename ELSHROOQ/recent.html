@@ -1,0 +1,33 @@
+
+<div class="container px-0 py-3">
+  <div class="pt-4">
+    <div
+      class="container px-0 d-flex py-2"
+      style="justify-content: space-between"
+    >
+      <h3 class="title font-weight-semibold my-0 px-0 fs-22 text-primary">
+        وصل حديثا
+      </h3>
+      <div>
+        <a href="/contents/products_list/limit:100" class="btn btn-action p-2">
+          رؤية المزيد
+        </a>
+      </div>
+    </div>
+    <div class="container">
+      <div id="recent"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $(document).ready(function () {
+    $.ajax({
+      url: `/contents/products_list/limit:4`,
+      type: "get",
+      success: function (resp) {
+        $("#recent").html($(resp).find("#all-products"));
+      },
+    });
+  });
+</script>

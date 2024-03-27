@@ -1,0 +1,189 @@
+<div id="register-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-3"></div>
+      <div class="col-lg-6">
+        <form action="/contents/register" method="POST">
+          <div class="py-12">
+            <h2 class="fs-22 font-weight-extrabold text-black mb-6">
+              تسجيل حساب جديد
+            </h2>
+            <div class="mb-6">
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="mb-4">
+                    <div class="form-group form-group-icon mb-0">
+                      <input
+                        name="data[Client][business_name]"
+                        value="{{ business_name }}"
+                        type="text"
+                        class="form-control form-control-lg {{#errors.business_name}} is-invalid {{/errors.business_name}}"
+                        placeholder="الاسم بالكامل *"
+                        required=""
+                      />
+                      <i class="form-icon far fa-user"></i>
+                    </div>
+                    {{#errors.business_name}}
+                    <small class="font-weight-semibold fs-13 text-danger"
+                      >{{ errors.business_name }}</small
+                    >
+                    {{/errors.business_name}}
+                  </div>
+                </div>
+                <div class="col-lg-12">
+                  <div class="mb-4">
+                    <div class="form-group form-group-icon mb-0">
+                      <input
+                        name="data[Client][email]"
+                        type="text"
+                        value="{{ email }}"
+                        class="form-control form-control-lg {{#errors.email}} is-invalid {{/errors.email}}"
+                        placeholder="البريد الالكتروني *"
+                        required=""
+                      />
+                      <i class="form-icon far fa-envelope"></i>
+                    </div>
+                    {{#errors.email}}
+                    <small class="font-weight-semibold fs-13 text-danger"
+                      >{{ errors.email }}</small
+                    >
+                    {{/errors.email}}
+                  </div>
+                </div>
+                <div class="col-lg-12">
+                  <div class="mb-4">
+                    <div class="form-group form-group-icon mb-0">
+                      <input
+                        name="data[Client][phone2]"
+                        type="number"
+                        min="0"
+                        value="{{ phone2 }}"
+                        class="form-control form-control-lg {{#errors.phone2}} is-invalid {{/errors.phone2}}"
+                        placeholder="الهاتف"
+                      />
+                      <i class="form-icon fas fa-mobile-alt"></i>
+                    </div>
+                    {{#errors.phone2}}
+                    <small class="font-weight-semibold fs-13 text-danger"
+                      >{{ errors.phone2 }}</small
+                    >
+                    {{/errors.phone2}}
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="mb-4">
+                    <div class="form-group form-group-icon mb-0">
+                      <input
+                        name="data[Client][password]"
+                        type="password"
+                        class="form-control form-control-lg {{#errors.password}} is-invalid {{/errors.password}}"
+                        placeholder="كلمة المرور *"
+                        required=""
+                      />
+                      <i class="form-icon far fa-lock-alt"></i>
+                      <i class="form-action far fa-eye"></i>
+                    </div>
+                    {{#errors.password}}
+                    <small class="font-weight-semibold fs-13 text-danger"
+                      >{{ errors.password }}</small
+                    >
+                    {{/errors.password}}
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="mb-4">
+                    <div class="form-group form-group-icon mb-0">
+                      <input
+                        name="data[Client][confirm_password]"
+                        type="password"
+                        class="form-control form-control-lg {{#errors.confirm_password}} is-invalid {{/errors.confirm_password}}"
+                        placeholder="تأكيد كلمة المرور *"
+                        required=""
+                      />
+                      <i class="form-icon far fa-lock-alt"></i>
+                      <i class="form-action far fa-eye"></i>
+                    </div>
+                    {{#errors.confirm_password}}
+                    <small class="font-weight-semibold fs-13 text-danger"
+                      >{{ errors.confirm_password }}</small
+                    >
+                    {{/errors.confirm_password}}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="text-right">
+              <button class="btn btn-primary btn-lg fs-20 click-notreal">
+                تسجيل
+              </button>
+            </div>
+            <div class="text-right d-none">
+              <button class="btn btn-primary btn-lg fs-20" type="submit">
+                تسجيل
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="col-lg-3"></div>
+    </div>
+  </div>
+</div>
+<script>
+  $(document).ready(() => {
+    $(".click-notreal").click((e) => {
+      e.preventDefault();
+      let pass = $(".form-control[name='data[Client][password]']").val();
+      let confirmPass = $(
+        ".form-control[name='data[Client][confirm_password]']"
+      ).val();
+      let name = $(".form-control[name='data[Client][business_name]']").val();
+      let email = $(".form-control[name='data[Client][email]']").val();
+      let phone = $(".form-control[name='data[Client][phone2]']").val();
+      console.log(pass, confirmPass, name, email, phone);
+      if (
+        pass != "" &&
+        pass == confirmPass &&
+        name != "" &&
+        email != "" &&
+        email.includes("@") &&
+        phone != ""
+      ) {
+        let clientInfo = {
+          sender: "HDynasty",
+          mobile: phone,
+          content: `لإتمام معاملتك  ادخل الرمز ${pass} المرسل من عيادات الدكتور سمير الحلو`,
+        };
+
+        console.log(JSON.stringify(clientInfo));
+        var settings = {
+          url: `https://api.releans.com/v2/message`,
+          method: "POST",
+          headers: {
+            Authorization:
+              "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6IjA3Y2UwOTA1LTJkMDQtNDc4OS05YzUwLWFjZTA5MTIyMjQxOCIsImlhdCI6MTY5MjYyMTkzMSwiaXNzIjoxNDM3MH0.xszjm_6afLgrdAOdDzjxFZpLmHzNJebopD1n3UwoDsM",
+            "Access-Control-Allow-Origin": "origin",
+            "Access-Control-Allow-Methods": "OPTIONS,POST,GET",
+            "Access-Control-Allow-Headerzs":
+              "Content-Type, Authorization, Content-Length, X-Requested-With, Accept",
+            "content-type": "application/json",
+          },
+          data: JSON.stringify(clientInfo),
+        };
+
+        $.ajax(settings).done(function (response) {
+          console.log(response);
+        });
+      } else {
+        console.log(
+          pass != "" &&
+            pass == confirmPass &&
+            name != "" &&
+            email != "" &&
+            email.includes("@") &&
+            phone != ""
+        );
+      }
+    });
+  });
+</script>

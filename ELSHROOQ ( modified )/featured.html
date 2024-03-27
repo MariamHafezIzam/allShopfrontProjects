@@ -1,0 +1,244 @@
+<!-- Demo styles -->
+<style>
+  .row-swiper .swiper {
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  .row-swiper .swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    background-color: transparent;
+
+    /* Center slide text vertically */
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+  }
+
+  .row-swiper .swiper-slide img {
+    display: block;
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+  }
+  .swiper-button-next,
+  .swiper-button-prev {
+    background-image: none !important;
+    background-color: #5bb0ba;
+    color: #fff;
+    display: flex !important;
+  }
+  .row-swiper .swiper-button-next {
+    background-image: none;
+    display: flex !important;
+  }
+  .row-swiper .swiper-button-prev,
+  .row-swiper .swiper-rtl .swiper-button-next {
+    background-color: #5bb0ba !important;
+    color: #fff !important;
+    display: flex !important;
+  }
+  #mySwiper .swiper-slide {
+    margin: 0px !important;
+  }
+  .swiper-button-next:after,
+  .swiper-button-prev:after {
+    color: #fff !important;
+    background-color: #5bb0ba !important;
+    font-size: 26px !important;
+    font-weight: 600;
+  }
+  .swiper-button-next,
+  .swiper-button-prev {
+    height: 37px !important;
+    width: 38px !important;
+  }
+  .custom_content .swiper-button-prev,
+  .custom_content .swiper-rtl .custom_content .swiper-button-next {
+    color: #fff !important;
+    background-color: #5bb0ba !important;
+  }
+  .swiper-button-prev:hover {
+    border-color: #5bb0ba !important;
+  }
+  .swiper-button-prev {
+    margin-right: 15px !important;
+  }
+  .swiper-button-next {
+    margin-left: 15px !important;
+  }
+  .featured-text {
+    height: 90px;
+  }
+  .card-img {
+    border-top-right-radius: 15px !important;
+    border-top-left-radius: 15px !important;
+  }
+  .card-title {
+    color: #000;
+    line-height: 1.4;
+    height: 70px;
+  }
+  .price {
+    color: #5bb0ba;
+  }
+
+  .text-alto {
+    color: #87384f !important;
+  }
+
+  @media only screen and (max-width: 991px) {
+    .featured-text {
+      height: 60px;
+    }
+
+    .swiper-button-next:after,
+    .swiper-button-prev:after {
+      font-size: 20px !important;
+      font-weight: 600;
+    }
+    .swiper-button-next,
+    .swiper-button-prev {
+      height: 30px !important;
+      width: 30px !important;
+    }
+
+    .swiper-button-prev {
+      margin-right: 5px !important;
+    }
+    .swiper-button-next {
+      margin-left: 5px !important;
+    }
+  }
+  .testSwiper {
+    overflow: hidden;
+  }
+</style>
+<div
+  class="container"
+  style="overflow: hidden; direction: rtl; text-align: right"
+>
+  <div class="py-4">
+    {{#itemsCount}}
+    <div id="home-featured-products-section" class="pb-4">
+      <div class="container px-0" style="max-width: 100%; margin: auto">
+        <div class="row row-swiper px-3 mx-0 px-lg-0">
+          <div class="d-flex w-100 py-2" style="justify-content: space-between">
+            <div>
+              <h3
+                class="title font-weight-semibold my-0 px-0 fs-22 text-primary"
+              >
+                الاكثر مبيعا
+              </h3>
+            </div>
+
+            <div>
+              <a
+                href="/contents/process_content/featured"
+                class="btn btn-action p-2 all"
+              >
+                رؤية المزيد
+              </a>
+            </div>
+          </div>
+
+          {{#items}}
+          <div class="col-lg-3 col-6 col py-2 px-lg-4 px-1 card-product box">
+            <div class="item hover w-100">
+              <div
+                class="align-items-start d-flex flex-column m-0 product p-0"
+                data-product-id="{{id}}"
+                data-image="{{file_full_path}}"
+                data-price="{{final_price_number}}"
+                data-name="{{name}}"
+                data-categories="{{category}}"
+                data-brands="{{brand}}"
+              >
+                <a
+                  href="/contents/product_view/{{id}}"
+                  class="text-decoration-none text-primary text-hover-black w-100"
+                >
+                  <img src="{{file_full_path}}" alt="" class="card-img" />
+
+                  <h6
+                    class="fs-lg-16 fs-14 font-weight-semibold p-1 px-lg-3 px-1 card-title text-center m-0 pro-name"
+                  >
+                    <span class=""> {{ name }}</span
+                    ><span
+                      class="font-weight-medium fs-16 text-body ml-2 d-none"
+                      >#{{id}}</span
+                    >
+                  </h6>
+                </a>
+                <div class="text-right">
+                  <div class="col-12 px-0">
+                    <div class="m-0 p-1 font-weight-bold">
+                      {{#discount}}
+                      <span class="price fs-14 px-2">{{final_price}}</span>
+                      <del class="color-second"
+                        ><span class="text-alto fs-14 mr-2 discount"
+                          >{{unit_price}}</span
+                        ></del
+                      >
+                      {{/discount}} {{^discount}}
+                      <span class="color-second fs-lg-14 fs-10 px-1"
+                        >{{final_price}}</span
+                      >
+                      {{/discount}}
+                    </div>
+                  </div>
+                </div>
+                <button
+                  data-name="{{name}}"
+                  class="add-to-cart-btn btn btn-sm btn-action font-weight-semibold fs-lg-18 fs-14 mx-auto my-2 w-75 tw-rounded-full"
+                >
+                  أضف للسلة
+                </button>
+              </div>
+            </div>
+          </div>
+          {{/items}}
+        </div>
+      </div>
+      {{/itemsCount}}
+    </div>
+  </div>
+</div>
+
+<script>
+  // let item = document.querySelectorAll(".item");
+  // let name = document.querySelectorAll(".pro-name");
+
+  // console.log(name[1].innerText.split(" ").slice(0, 3).join(" "));
+  // for (let i = 0; i < name.length; i++) {
+  //   name[i].innerText = name[i].innerText.split(" ").slice(0, 3).join(" ");
+  // }
+
+  $(document).ready(function () {
+    let url = window.location.href;
+    if (url == "https://www.elshoroukshop.online/home") {
+      var cards = $(".card-product").length;
+
+      if (cards > 5) {
+        $(".card-product")
+          .css("display", "none")
+          .filter(":nth-of-type(-n+5)")
+          .css("display", "flex");
+      } else {
+        console.log("More than 5");
+      }
+    } else {
+      $(".all").css("display", "none");
+    }
+  });
+</script>

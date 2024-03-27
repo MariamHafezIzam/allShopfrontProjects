@@ -1,0 +1,341 @@
+<style>
+  .loader {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background: #ffffff;
+    z-index: 150;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s;
+  }
+
+  .loader .spinner-border {
+    transition: all 0.3s;
+  }
+</style>
+<div id="checkout-section" style="position: relative">
+  <div class="loader">
+    <div class="spinner-border"></div>
+  </div>
+  <div id="thankyou-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-xl-3 col-lg-2"></div>
+        <div class="col-xl-6 col-lg-8">
+          <div class="text-center pt-18">
+            <div id="div-icon" class="">
+              <div class="text-success mb-4">
+                <i class="far fa-check-circle fs-73 mb-3"></i>
+                <h2
+                  id="title-reserv"
+                  class="fs-30 fs-lg-40 font-weight-extrabold"
+                >
+                  يمكنك مراجعة حجزك من حسابك
+                </h2>
+              </div>
+            </div>
+            <p
+              id="result"
+              class="fs-16 fs-lg-22 font-weight-semibold text-dark mb-15"
+            >
+              تم الحجز بنجاح
+            </p>
+            <a
+              href="/home"
+              class="btn btn-link fs-16 font-weight-semibold text-dark text-hover-primary"
+              ><i class="fas fa-home fs-20 mr-2"></i
+              ><span>العودة للرئيسية</span></a
+            >
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-2"></div>
+      </div>
+    </div>
+  </div>
+  <script>
+    $(document).ready(() => {
+      $("#flashMessage").text("الطلب قيد التجهيز وسيتم إبلاغك فور الإنتهاء");
+
+      let url = window.location.href;
+      url = url.split("=");
+      let invID = url[1];
+
+      console.log(USER.client_id);
+      if (USER.client_id != 0) {
+        var settings = {
+          url: `https://www.elshoroukshop.online/v2/api/entity/client/${USER.client_id}`,
+          method: "GET",
+          headers: {
+            APIKEY: "2b0750639236167532feb564896822d54096eff8",
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+        };
+        let newDiv = `
+                    <div class="text-danger mb-4">
+                      <i class="fas fa-times-circle fs-73 mb-3"></i>
+
+              <h2
+                id="title-reserv"
+                class="fs-30 fs-lg-40 font-weight-extrabold"
+              >
+             عملية غير ناجحة
+
+              </h2>
+            </div>
+                    `;
+        $.ajax(settings).then((client) => {
+          if (client.custom_data.field_91 == "ديلر") {
+            $.ajax({
+              url: `/api2/invoices/${invID}`,
+              method: "GET",
+              headers: {
+                APIKEY: "2b0750639236167532feb564896822d54096eff8",
+                "Content-Type": "application/json",
+                Accept: "application/json",
+              },
+              success: function (response) {
+                var allData = {
+                  Invoice: {
+                    id: response.data.Invoice.id,
+
+                    staff_id: response.data.Invoice.staff_id,
+                    no: response.data.Invoice.no,
+                    client_id: response.data.Invoice.client_id,
+                    client_email: response.data.Invoice.client_email,
+                    date: response.data.Invoice.date,
+                    draft: "0",
+                    discount: response.data.Invoice.discount,
+                    discount_amount: response.data.Invoice.discount_amount,
+                    deposit: response.data.Invoice.deposit,
+                    currency_code: "EGP",
+                    is_offline: response.data.Invoice.is_offline,
+                    follow_up_status: 21,
+                    invoice_layout_id: 18,
+                  },
+                  InvoiceItem: response.data.Invoice.InvoiceItem,
+                  InvoiceCustomField: response.data.Invoice.InvoiceCustomField,
+                };
+                console.log(JSON.stringify(allData));
+                let invoiceItems = response.data.Invoice.InvoiceItem;
+                console.log(invoiceItems);
+                var settings = {
+                  url: `/api2/invoices/${invID}`,
+                  method: "PUT",
+                  headers: {
+                    APIKEY: "2b0750639236167532feb564896822d54096eff8",
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                  },
+                  data: JSON.stringify(allData),
+                  success: (resp) => {
+                    console.log(resp);
+                    $(".loader").hide();
+                  },
+                  error: (e) => {
+                    console.log(e.responseJSON.message);
+                    if (invoiceItems.length == 1) {
+                      let qty = response.data.Invoice.InvoiceItem[0].quantity;
+                      console.log(qty);
+                      if (qty > 1) {
+                        let productID =
+                          response.data.Invoice.InvoiceItem[0].product_id;
+                        $.ajax({
+                          type: "GET",
+                          url: "/v2/api/entity/product/" + productID,
+                          headers: {
+                            "Content-Type": "application/json",
+                            Accept: "application/json",
+                            APIKEY: "2b0750639236167532feb564896822d54096eff8",
+                          },
+                          contentType: "application/json",
+                        }).done((data) => {
+                          console.log(data);
+                          let stock = data.stock_balance;
+                          if (qty > stock && stock != 0) {
+                            invoiceItems[0].quantity = stock;
+                            console.log(invoiceItems);
+
+                            var allData = {
+                              Invoice: {
+                                id: response.data.Invoice.id,
+
+                                staff_id: response.data.Invoice.staff_id,
+                                no: response.data.Invoice.no,
+                                client_id: response.data.Invoice.client_id,
+                                client_email:
+                                  response.data.Invoice.client_email,
+                                date: response.data.Invoice.date,
+                                draft: "0",
+                                discount: response.data.Invoice.discount,
+                                discount_amount:
+                                  response.data.Invoice.discount_amount,
+                                deposit: response.data.Invoice.deposit,
+                                currency_code: "EGP",
+                                is_offline: response.data.Invoice.is_offline,
+                                follow_up_status: 21,
+                                invoice_layout_id: 13,
+                              },
+                              InvoiceItem: invoiceItems,
+                              InvoiceCustomField:
+                                response.data.Invoice.InvoiceCustomField,
+                            };
+                            console.log(JSON.stringify(allData));
+                            var settings = {
+                              url: `/api2/invoices/${invID}`,
+                              method: "PUT",
+                              headers: {
+                                APIKEY:
+                                  "2b0750639236167532feb564896822d54096eff8",
+                                "Content-Type": "application/json",
+                                Accept: "application/json",
+                              },
+                              data: JSON.stringify(allData),
+                              success: (resp) => {
+                                console.log(resp);
+                                $("#result").html(
+                                  `تم حذف بعض الكميات لعدم توافر الكمية التي تم طلبها للاطلاع الرجاء  
+                                      <a
+                      href="https://www.elshoroukshop.online/owner/invoices/view/${invID}"
+                      class="btn btn-link fs-16 font-weight-semibold text-primary "
+                      ><i class="fas fa-reply fs-20 mr-2"></i
+                      ><span>اضغط هنا  </span></a
+                    >
+                                      `
+                                );
+                                $(".loader").hide();
+                              },
+                              error: (e) => {
+                                console.log(e.responseJSON.message);
+                              },
+                            };
+                            $.ajax(settings).done(function (response) {
+                              console.log(response);
+                            });
+                          }
+                        });
+                      } else {
+                        let respon = e.responseJSON.message;
+
+                        $("#div-icon").html(newDiv);
+
+                        $("#result").text(
+                          ` لم يتم عمل الفاتورة بسبب ان ${respon}`
+                        );
+                        $(".loader").hide();
+                      }
+                    } else {
+                      $.each(invoiceItems, (i, val) => {
+                        let productID = val.product_id;
+                        let qty = val.quantity;
+                        $.ajax({
+                          type: "GET",
+                          url: "/v2/api/entity/product/" + productID,
+                          headers: {
+                            "Content-Type": "application/json",
+                            Accept: "application/json",
+                            APIKEY: "2b0750639236167532feb564896822d54096eff8",
+                          },
+                          contentType: "application/json",
+                        }).done((data) => {
+                          console.log(data);
+                          let stock = data.stock_balance;
+                          if (qty > stock && stock != 0) {
+                            invoiceItems[i].quantity = stock;
+                            console.log(invoiceItems);
+                          } else if (qty > stock && stock == 0) {
+                            invoiceItems = invoiceItems.filter(function (item) {
+                              return item !== val;
+                            });
+                            console.log(invoiceItems);
+                          } else {
+                            console.log(invoiceItems);
+                          }
+                        });
+                      });
+                      setTimeout(() => {
+                        console.log(invoiceItems, "iuyhgt");
+
+                        var allData = {
+                          Invoice: {
+                            id: response.data.Invoice.id,
+
+                            staff_id: response.data.Invoice.staff_id,
+                            no: response.data.Invoice.no,
+                            client_id: response.data.Invoice.client_id,
+                            client_email: response.data.Invoice.client_email,
+                            date: response.data.Invoice.date,
+                            draft: "0",
+                            discount: response.data.Invoice.discount,
+                            discount_amount:
+                              response.data.Invoice.discount_amount,
+                            deposit: response.data.Invoice.deposit,
+                            currency_code: "EGP",
+                            is_offline: response.data.Invoice.is_offline,
+                            follow_up_status: 21,
+                            invoice_layout_id: 13,
+                          },
+                          InvoiceItem: invoiceItems,
+                          InvoiceCustomField:
+                            response.data.Invoice.InvoiceCustomField,
+                        };
+                        console.log(JSON.stringify(allData));
+                        var settings = {
+                          url: `/api2/invoices/${invID}`,
+                          method: "PUT",
+                          headers: {
+                            APIKEY: "2b0750639236167532feb564896822d54096eff8",
+                            "Content-Type": "application/json",
+                            Accept: "application/json",
+                          },
+                          data: JSON.stringify(allData),
+                          success: (resp) => {
+                            console.log(resp);
+                            $("#result").html(
+                              `تم حذف بعض الكميات لعدم توافر الكمية التي تم طلبها للاطلاع الرجاء  
+                                      <a
+                      href="https://www.elshoroukshop.online/owner/invoices/view/${invID}"
+                      class="btn btn-link fs-16 font-weight-semibold text-primary "
+                      ><i class="fas fa-reply fs-20 mr-2"></i
+                      ><span>اضغط هنا  </span></a
+                    >
+                                      `
+                            );
+                            $(".loader").hide();
+                          },
+                          error: (e) => {
+                            console.log(e.responseJSON.message);
+                          },
+                        };
+                        $.ajax(settings).done(function (response) {
+                          console.log(response);
+                        });
+                      }, 3000);
+                    }
+                  },
+                };
+
+                $.ajax(settings).done(function (response) {
+                  console.log(response);
+                  console.log("GGGG");
+                });
+              },
+              error: function (error) {
+                console.log("Hello Error");
+                console.log(error);
+                $("#div-icon").html(newDiv);
+
+                $("#result").text(` ${error.responseJSON.message}`);
+                $(".loader").hide();
+              },
+            });
+          }
+        });
+      }
+    });
+  </script>
+</div>

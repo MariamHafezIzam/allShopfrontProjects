@@ -1,0 +1,90 @@
+<style>
+  .load {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background: #ffffff;
+    z-index: 150;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s;
+  }
+
+  .load .spinner-border {
+    transition: all 0.3s;
+  }
+</style>
+<div id="checkout-section" style="position: relative">
+  <div class="load">
+    <div class="spinner-border"></div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-1"></div>
+      <div class="col-lg-10">
+        <div class="text-center pt-18">
+          {{# is_logged_in}} {{^ has_invoice}}
+          <h2 class="font-weight-medium fs-18 mb-8 text-danger">
+            خطأ: {{ errorMsg }}
+          </h2>
+          {{/ has_invoice}} {{# has_invoice}}
+          <h1 class="fs-40 font-weight-extrabold text-dark mb-8">شراء</h1>
+          {{/ has_invoice}} {{/ is_logged_in}} {{^ is_logged_in}}
+          <h2 class="font-weight-medium fs-18 mb-8 text-dark">
+            من فضلك
+            <a
+              href="/contents/login"
+              class="btn btn-outline-primary fs-10 fs-lg-14 fs-sm-13 fs-xl-16 mr-2 mr-lg-0 p-1 px-sm-2 py-sm-1"
+              >تسجيل الدخول</a
+            >
+            او
+            <a
+              href="/contents/register"
+              class="btn btn-outline-primary fs-10 fs-lg-14 fs-sm-13 fs-xl-16 mr-2 mr-lg-0 p-1 px-sm-2 py-sm-1"
+              >تسجيل حساب جديد</a
+            >
+          </h2>
+          {{/ is_logged_in}}
+        </div>
+        <div class="row">
+          <div class="col-lg-12" style="text-align: center">
+            {{# is_logged_in}}{{# has_invoice}}
+            <iframe
+              onload=""
+              id="payment_iframe"
+              width="89%"
+              height="500"
+              src="{{ payment_link }}"
+              frameborder="0"
+            ></iframe>
+            {{/ has_invoice}}{{/ is_logged_in}}
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-1"></div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript" language="javascript">
+  // var iFrameSelector = $("#payment_iframe");
+  // resizeIframe(iFrameSelector);
+  // function resizeIframe(iframe) {
+  //   iframe.height = iframe.contentWindow.document.body.scrollHeight + "px";
+  // }
+
+  $(document).ready(function () {
+    setTimeout(() => {
+      console.log(
+        "mo2mn",
+        $("#payment_iframe").contents().find(`#ClientAddPayment`)
+      );
+      $("#payment_iframe")
+        .contents()
+        .find(`#ClientAddPayment`)
+        .trigger("submit");
+    }, 6000);
+  });
+</script>

@@ -1,0 +1,148 @@
+<style>
+  .btn-action:hover {
+    background-color: #c15b78;
+    color: #fff;
+    border-radius: 12px;
+    transition: 1s;
+    border-color: #c15b78;
+  }
+  .btn-action {
+    background-color: #f6c8cc;
+    color: #4badb8 !important;
+    border-radius: 12px;
+    transition: 1s;
+    border-color: #f6c8cc;
+  }
+  .form-control {
+    color: #87384f !important;
+    border-color: #87384f;
+    /* color: #47537b !important; */
+  }
+  .form-control::placeholder {
+    color: #87384f !important;
+  }
+  input:focus::placeholder {
+    color: #fff !important;
+  }
+  .form-control::selection {
+    background-color: #87384f !important;
+    color: #fff;
+  }
+  .form-control:focus {
+    color: #87384f !important;
+  }
+  .form-group-icon .form-icon {
+    color: #f6c8cc;
+  }
+  .form-group-icon .form-control:focus ~ .form-icon {
+    color: #4badb8 !important;
+  }
+  .form-group-icon .form-action,
+  .form-group-icon .form-action:hover {
+    color: #4badb8 !important;
+  }
+  .ltr .form-group-icon .form-icon {
+    right: 0 !important;
+  }
+  #eye,
+  .ltr .form-group-action .form-action,
+  .ltr .form-group-icon .form-action {
+    left: 0 !important;
+    right: 92% !important;
+  }
+  .ltr .form-group-icon .form-control {
+    padding-left: 20px;
+    padding-right: 50px;
+    border-radius: 7px;
+  }
+</style>
+
+<div id="login-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-3"></div>
+      <div class="col-lg-6">
+        <form action="/contents/login" method="post" style="direction: rtl">
+          <div class="py-12">
+            <h2 class="fs-22 font-weight-bold mb-6 text-left text-primary">
+              تسجيل دخول
+            </h2>
+            <div class="mb-6">
+              <div class="form-group form-group-icon mb-4">
+                <input
+                  name="data[Client][business_name]"
+                  value="{{ business_name }}"
+                  type="text"
+                  class="form-control form-control-lg {{#errors.business_name}} is-invalid {{/errors.business_name}}"
+                  placeholder="الاسم *"
+                  required=""
+                  id="name-email"
+                />
+                <i class="form-icon far fa-user"></i>
+              </div>
+              {{#errors.business_name}}
+              <small class="font-weight-semibold fs-13 text-danger"
+                >{{ errors.business_name }}</small
+              >
+              {{/errors.business_name}}
+
+              <div class="form-group form-group-icon mb-4 d-none">
+                <input
+                  name="data[Client][email]"
+                  type="text"
+                  value="{{ email }}"
+                  class="form-control form-control-lg"
+                  placeholder="البريد الالكتروني *"
+                  required=""
+                  id="email"
+                />
+                <i class="form-icon far fa-envelope"></i>
+              </div>
+              <div class="form-group form-group-icon mb-4">
+                <input
+                  name="data[Client][password]"
+                  type="password"
+                  class="form-control form-control-lg"
+                  placeholder="كلمة المرور *"
+                  required=""
+                />
+                <i class="form-icon far fa-lock-alt"></i>
+                <i class="form-action far fa-eye" id="eye"></i>
+              </div>
+            </div>
+            <div
+              class="d-flex flex-column flex-lg-row align-items-lg-center justify-content-between"
+            >
+              <div class="mb-4 mb-lg-0">
+                <p class="font-weight-medium mb-0 text-secondary">
+                  ليس لديك حساب؟
+                  <a href="/clients/register" class=""
+                    ><strong>حساب جديد</strong>
+                  </a>
+                </p>
+
+                <!-- <p class="font-weight-medium text-dark mb-0">
+                  <a href="/clients/forgot" class="text-dark"
+                    ><strong>نسيت كلمة المرور؟</strong>
+                  </a>
+                </p> -->
+              </div>
+              <button class="btn btn-lg fs-20 btn-action py-2" type="submit">
+                تسجيل الدخول
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="col-lg-3"></div>
+    </div>
+  </div>
+</div>
+<script>
+  $("#name-email").on("change  keyup propertychange", () => {
+    let emailPre = $("#name-email").val();
+    let value = `${emailPre}@gmail.com`;
+    console.log(emailPre);
+    $("#email").val(value);
+  });
+</script>
