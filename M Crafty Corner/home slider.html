@@ -1,0 +1,70 @@
+<style>
+  .test {
+    padding: 0 100px;
+  }
+  .swiper-pagination-bullet {
+    width: 9px !important;
+    height: 9px !important;
+    display: inline-block !important;
+    border-radius: 100% !important;
+    background: #fff !important;
+    opacity: 0.5 !important;
+    transition: all 0.2s ease-in-out !important;
+  }
+  #home-slider-section .home-slide {
+    height: 550px;
+  }
+  .swiper-pagination-bullet-active {
+    opacity: 1 !important  ;
+    background: #fff !important;
+    border-radius: 8px !important;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    width: 21px !important;
+  }
+  .swiper-container-horizontal
+    > .swiper-pagination-bullets
+    .swiper-pagination-bullet {
+    margin: 0 4px !important;
+  }
+
+  @media only screen and (max-width: 991px) {
+    #home-slider-section .home-slide {
+      height: 250px !important;
+    }
+  }
+</style>
+<div id="home-slider-section" class="pt-lg-7">
+  <div class="container" style="max-width: 1480px">
+    <div class="row">
+      <div class="col-lg-12 px-0 px-lg-3 test">
+        <div class="swiper-slider p-2" style="border-radius: 15px">
+          <div class="swiper-container home-swiper">
+            <div class="swiper-wrapper" style="border-radius: 20px">
+              {{#items}}
+              <div
+                class="home-slide swiper-slide"
+                aria-label="M crafty Corner"
+                style="border: 2px solid #c14d76 ; border-radius: 20px ;background-image: url({{file}})"
+              >
+                <div class="container">
+                  <div class="row">
+                    <div class="col-lg-7">
+                      <div class="text-center">
+                        <h1
+                          class="fs-22 fs-lg-28 fs-xl-58 py-5 font-weight-bold text-white"
+                        ></h1>
+                      </div>
+                    </div>
+                    <div class="col-lg-5"></div>
+                  </div>
+                </div>
+              </div>
+              {{/items}}
+            </div>
+            <div class="swiper-pagination-bullets"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

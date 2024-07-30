@@ -1,25 +1,48 @@
 <style>
-  .load {
+  .loader {
     position: absolute;
     width: 100%;
     height: 100%;
-    left: 0;
+    left: 0%;
     top: 0;
     background: #ffffff;
-    z-index: 150;
+    z-index: 1;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    text-align: center;
+    align-content: center;
     transition: all 0.3s;
+    display: block;
   }
 
-  .load .spinner-border {
+  .loader .img {
     transition: all 0.3s;
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
   }
 </style>
 <div id="checkout-section" style="position: relative">
   <div class="load">
-    <div class="spinner-border"></div>
+    <div
+      style="
+        justify-content: center;
+        justify-items: center;
+        align-items: center;
+      "
+    >
+      <div class="loader">
+        <p class="warning fs-lg-40 fs-20 fs text-danger font-weight-medium">
+          من فضلك لا تغلق الصفحة حتي يتم حفظ الفاتورة
+        </p>
+        <img
+          src="https://www.elshoroukshop.online/files/152938fd/logos/6645d3bce6c2f_blobid1715852217561.gif"
+          alt=""
+          title="600300 لوجو متحرك الشروق (2).gif"
+          width="300"
+          height="150"
+        />
+      </div>
+    </div>
   </div>
   <div class="container">
     <div class="row">
@@ -75,8 +98,101 @@
   //   iframe.height = iframe.contentWindow.document.body.scrollHeight + "px";
   // }
 
+  $(document).ready(() => {
+    let id = USER.client_id;
+    $(".overlay").show();
+    console.log(id);
+
+    let checkData = setInterval(() => {
+      console.log(document.querySelector("#payment_iframe"));
+      document
+        .querySelector("#payment_iframe")
+        .contentDocument.querySelector("#InvoicePaymentFirstName").value = "-";
+      document
+        .querySelector("#payment_iframe")
+        .contentDocument.querySelector("#InvoicePaymentLastName").value = "-";
+      document
+        .querySelector("#payment_iframe")
+        .contentDocument.querySelector("#InvoicePaymentState").value = "-";
+      document
+        .querySelector("#payment_iframe")
+        .contentDocument.querySelector("#InvoicePaymentState").value = "-";
+      document
+        .querySelector("#payment_iframe")
+        .contentDocument.querySelector("#InvoicePaymentState").value = "-";
+      document
+        .querySelector("#payment_iframe")
+        .contentDocument.querySelector("#InvoicePaymentState").value = "-";
+      document
+        .querySelector("#payment_iframe")
+        .contentDocument.querySelector("#InvoicePaymentState").value = "-";
+      document
+        .querySelector("#payment_iframe")
+        .contentDocument.querySelector("#InvoicePaymentState").value = "-";
+      document
+        .querySelector("#payment_iframe")
+        .contentDocument.querySelector("#InvoicePaymentState").value = "-";
+      document
+        .querySelector("#payment_iframe")
+        .contentDocument.querySelector(
+          "div.wrap > div > div > div.col-flex-lg-8.pr-lg-0 > div:nth-child(1)"
+        ).style.display = "none";
+      $(".overlay").hide();
+      $("#payment_iframe")
+        .contents()
+        .find(`#ClientAddPayment`)
+        .trigger("submit");
+
+      clearInterval(checkData);
+    }, 1000);
+    checkData();
+    // setTimeout(() => {
+    //   console.log(document.querySelector("#payment_iframe"));
+    //   document
+    //     .querySelector("#payment_iframe")
+    //     .contentDocument.querySelector("#InvoicePaymentFirstName").value = "-";
+    //   document
+    //     .querySelector("#payment_iframe")
+    //     .contentDocument.querySelector("#InvoicePaymentLastName").value = "-";
+    //   document
+    //     .querySelector("#payment_iframe")
+    //     .contentDocument.querySelector("#InvoicePaymentState").value = "-";
+    //   document
+    //     .querySelector("#payment_iframe")
+    //     .contentDocument.querySelector("#InvoicePaymentState").value = "-";
+    //   document
+    //     .querySelector("#payment_iframe")
+    //     .contentDocument.querySelector("#InvoicePaymentState").value = "-";
+    //   document
+    //     .querySelector("#payment_iframe")
+    //     .contentDocument.querySelector("#InvoicePaymentState").value = "-";
+    //   document
+    //     .querySelector("#payment_iframe")
+    //     .contentDocument.querySelector("#InvoicePaymentState").value = "-";
+    //   document
+    //     .querySelector("#payment_iframe")
+    //     .contentDocument.querySelector("#InvoicePaymentState").value = "-";
+    //   document
+    //     .querySelector("#payment_iframe")
+    //     .contentDocument.querySelector("#InvoicePaymentState").value = "-";
+    //   document
+    //     .querySelector("#payment_iframe")
+    //     .contentDocument.querySelector(
+    //       "div.wrap > div > div > div.col-flex-lg-8.pr-lg-0 > div:nth-child(1)"
+    //     ).style.display = "none";
+    //   $(".overlay").hide();
+    // }, 5000);
+
+    // document.querySelector("#payment_iframe").contentDocument.querySelector("div.wrap > div > div > div.col-flex-lg-8.pr-lg-0 > div:nth-child(1)");
+  });
+  // });
+</script>
+
+<!-- 
+
   $(document).ready(function () {
     setTimeout(() => {
+      let checkData = setInterval(() => {
       console.log(
         "mo2mn",
         $("#payment_iframe").contents().find(`#ClientAddPayment`)
@@ -85,6 +201,12 @@
         .contents()
         .find(`#ClientAddPayment`)
         .trigger("submit");
-    }, 6000);
+
+      clearInterval(checkData);
+    }, 1000);
+    checkData();
+    }, 500);
+   
+
   });
-</script>
+</script> -->

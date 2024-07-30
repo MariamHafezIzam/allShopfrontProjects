@@ -1,0 +1,158 @@
+<div id="all-status-ar" dir="rtl" class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h3 class="fs-32 font-weight-medium text-light-gray py-4">
+        السؤال عن التدريب
+      </h3>
+      <div class="panel panel-primary panel-upcoming">
+        <div class="panel-heading">الجلسات القادمة</div>
+
+        <div class="panel-body">
+          <div class="table-responsive">
+            <table id="upcoming-ar" class="table table-striped table-primary">
+              <thead>
+                <tr>
+                  <th>كود الجلسة</th>
+                  <th>اسم الموديول</th>
+                  <th>اللغة</th>
+                  <th>التاريخ</th>
+                  <th>الوقت</th>
+                  <th>الحالة</th>
+                  <th>رابط الجلسة</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+      <br />
+      <hr />
+      <br />
+
+      <div class="panel panel-danger panel-archives">
+        <div class="panel-heading">الجلسات المنتهية</div>
+        <div class="panel-body">
+          <div class="table-responsive">
+            <table id="archives-ar" class="table table-striped table-primary">
+              <thead>
+                <tr>
+                  <th>كود الجلسة</th>
+                  <th>اسم الموديول</th>
+                  <th>اللغة</th>
+                  <th>التاريخ</th>
+                  <th>الوقت</th>
+                  <th>الحالة</th>
+                  <th>رابط التسجيل</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $(document).ready(() => {
+    let catronaUpcoming = "";
+    let catronaArchives = "";
+    $.ajax({
+      type: "GET",
+      url: "/v2/api/entity/le_workflow-type-entity-3/list/1?filter[status]=status-1",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        APIKEY: "69316f2969f7c7236618d903ec09181951eba941	",
+      },
+      credentials: "same-origin",
+      contentType: "application/json",
+    })
+      .done((data) => {
+        data = data.data;
+        console.log(data, data.length);
+        $.each(data, (i, val) => {
+          console.log(val);
+          let tr = `
+        <tr>
+                    <td class='code'>${val["le_workflow-type-entity-3_custom_data"].session_code}</td>
+                    <td class='name'>${val.title}
+                    </td>
+                    <td class='lang'> ${val["le_workflow-type-entity-3_custom_data"].language} </td>
+                    <td class='date'>${val.start_date}</td>
+                    <td class='time'>
+                   ${val["le_workflow-type-entity-3_custom_data"].time}
+                    </td>
+                    <td>
+                      <span class="badge badge-success badge badge-success p-2 fs-14"
+                        ><i class="fa fa-check"></i> ${val["le_workflow-type-entity-3_custom_data"].status}</span
+                      >
+                    </td>
+                    <td >
+                      <a
+                        href="${val["le_workflow-type-entity-3_custom_data"].link_session}"
+                        class="btn btn-blue"
+                        >الانضمام فى الموعد</a
+                      >
+                    </td>
+                  </tr>
+        `;
+          catronaUpcoming += tr;
+          console.log(catronaUpcoming);
+        });
+      })
+      .then(() => {
+        $("#upcoming-ar tbody").append(catronaUpcoming);
+      });
+    $.ajax({
+      type: "GET",
+      url: "/v2/api/entity/le_workflow-type-entity-3/list/1?filter[status]=status-2",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        APIKEY: "69316f2969f7c7236618d903ec09181951eba941	",
+      },
+      credentials: "same-origin",
+      contentType: "application/json",
+    })
+      .done((data) => {
+        data = data.data;
+        console.log(data, data.length);
+        $.each(data, (i, val) => {
+          console.log(val);
+          let tr = `
+        <tr>
+                    <td class='code'>${val["le_workflow-type-entity-3_custom_data"].session_code}</td>
+                    <td class='name'>${val.title}
+                    </td>
+                    <td class='lang'> ${val["le_workflow-type-entity-3_custom_data"].language} </td>
+                    <td class='date'>${val.start_date}</td>
+                    <td class='time'>
+                   ${val["le_workflow-type-entity-3_custom_data"].time}
+                    </td>
+                    <td>
+                      <span class="badge badge-danger p-2 fs-14"
+                        ><i class="fa fa-times"></i> ${val["le_workflow-type-entity-3_custom_data"].status}</span
+                      >
+                    </td>
+                    <td >
+                      <a
+                        href="${val["le_workflow-type-entity-3_custom_data"].link_record}"
+                        class="btn btn-blue"
+                        > رابط التسجيل </a
+                      >
+                    </td>
+                  </tr>
+        `;
+          catronaArchives += tr;
+          console.log(catronaArchives);
+        });
+      })
+      .then(() => {
+        $("#archives-ar tbody").append(catronaArchives);
+      });
+  });
+</script>

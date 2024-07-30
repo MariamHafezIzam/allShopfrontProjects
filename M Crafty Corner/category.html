@@ -1,0 +1,60 @@
+{{#count}}
+<div
+  id="home-categories-section"
+  class="py-7"
+  style="background-color: #f7f4f2"
+>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-10 col-8 text-left">
+        <h1
+          class="fs-20 fs-lg-26 mb-5 text-primary py-3"
+          style="font-weight: 600"
+        >
+          Categories
+      </h1>
+      </div>
+      <div class="col-lg-2 col-4 text-right mb-5 py-3 transition">
+        <a class="links fw-bold fs-16" href="/contents/process_content/all_cat">
+          View All <i class="fas fa-arrow-right ml-1"></i
+        ></a>
+      </div>
+    </div>
+    <div class="row">
+      {{#items}}
+      <div class="col-lg-2 col-sm-4 col-6 p-lg-0 p-2">
+        <a
+          href="/contents/products_list?cat_id={{id}}"
+          class="text-decoration-none text-black text-hover-primary"
+        >
+          <div class="text-center mb-6 mb-lg-0">
+            {{#image_full_path}}
+            <div class="parent">
+              <img
+                src="{{image_full_path}}"
+                width="150"
+                height="150"
+                alt="Sandwiches {{name}}"
+                class="img-fluid cat-img mx-auto img-cover mb-3 category-img-sm"
+              />
+            </div>
+            {{/image_full_path}} {{^image_full_path}}
+            <img
+              src="https://cdn.daftra.com/templates/shop_1/img/category_thumb.svg"
+              width="168"
+              height="125"
+              alt="Sandwiches {{name}}"
+              class="img-fluid h-125px w-100 mx-auto img-cover mb-3 category-img-sm"
+            />
+            {{/image_full_path}}
+            <div class="pt-2 text-center transition transform">
+              <h6 class="fs-16 font-weight-bold mb-2 hover-col">{{name}}</h6>
+            </div>
+          </div>
+        </a>
+      </div>
+      {{/items}}
+    </div>
+  </div>
+</div>
+{{/count}}

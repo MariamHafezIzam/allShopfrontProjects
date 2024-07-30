@@ -1,0 +1,50 @@
+<script>
+  $(document).ready(() => {
+    console.log("hello edit page");
+    let status = $("#le_workflow-type-entity-3_custom_data-status").val();
+    $(document).on(
+      "change",
+      "#le_workflow-type-entity-3_custom_data-status",
+      function () {
+        console.log($("#le_workflow-type-entity-3_custom_data-status").val());
+        if (
+          $("#le_workflow-type-entity-3_custom_data-status").val() == "Inactive"
+        ) {
+          $(".action-buttons button.btn.btn-icon.btn-success").addClass(
+            "disabled"
+          );
+
+          let recorded = $(
+            "#le_workflow-type-entity-3_custom_data-link_record"
+          ).val();
+          $(document).on(
+            "change",
+            "#le_workflow-type-entity-3_custom_data-link_record",
+            function () {
+              if (
+                $("#le_workflow-type-entity-3_custom_data-link_record").val() ==
+                ""
+              ) {
+                console.log("ghfd");
+                console.log(
+                  $(".action-buttons button.btn.btn-icon.btn-success")
+                );
+                $(".action-buttons button.btn.btn-icon.btn-success").addClass(
+                  "disabled"
+                );
+              } else {
+                $(
+                  ".action-buttons button.btn.btn-icon.btn-success"
+                ).removeClass("disabled");
+              }
+            }
+          );
+        } else {
+          $(".action-buttons button.btn.btn-icon.btn-success").removeClass(
+            "disabled"
+          );
+        }
+      }
+    );
+  });
+</script>

@@ -1,0 +1,144 @@
+<style>
+  .pop-up {
+    position: absolute;
+    top: 15%;
+    left: 25%;
+    height: 250px;
+    width: 50%;
+    display: none;
+    background-color: #fff;
+    z-index: 5555555;
+    padding: 20px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+      rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+      rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    color: #1a2756;
+    font-weight: 500;
+    font-size: 18px;
+  }
+</style>
+<script>
+  let div = `
+<div class="pop-up">
+    <div class="exit text-right py-2 ">  <i
+                      _ngcontent-c2=""
+                      style="color: #20485f; font-size: 20px"
+                      class="fa fa-times"
+                    ></i> </div>
+  <div
+    class="text-center container-le_workflow-type-entity-3_custom_data-link_record"
+  >
+    <div
+      class="form-group h-auto input-error-target"
+      data-izam1-forms1-input-container="le_workflow-type-entity-3_custom_data-link_record"
+    >
+      <label
+        for="le_workflow-type-entity-3_custom_data-link_record"
+        class="control-label"
+        >Link Record
+      </label>
+      <input
+        type="url"
+        name="le_workflow-type-entity-3_custom_data[link_record]"
+        nullable="nullable"
+        class="form-control"
+        id="le_workflow-type-entity-3_custom_data-link_record"
+        placeholder="https://www.daftra.com"
+      />
+    </div>
+  </div>
+  <div style="justify-content: center;" class="d-flex">
+   <button id="update_state"
+          class="submit btn disabled btn-info text-uppercase font-weight-medium bg-second p-2 fs-14 rounded-start btn-new m-2 close-popup"
+          style="font-size: 18px; margin-top: 10px; place-self: center"
+        >
+          Add Link
+        </button>
+        </div>
+</div>
+`;
+  $(document).ready(() => {
+    let workflowID = $("#breadcrumb > li.breadcrumb-item.active > span")
+      .text()
+      .replace("جلسات المبيعات #", "");
+
+    $(".main-area.clearfix ").append(div);
+
+    console.log("hello edit page");
+    let aClosed = $(".button-toggle > ul > li:nth-child(2) > a");
+    $(aClosed).click((e) => {
+      if (aClosed.text() == " مغلق") {
+        e.preventDefault();
+        $(".pop-up").show();
+        $(".exit").click(() => {
+          $(".new-layout").hide();
+        });
+        $("#le_workflow-type-entity-3_custom_data-link_record").on(
+          "change",
+          function () {
+            if (
+              $("#le_workflow-type-entity-3_custom_data-link_record").val() !=
+              ""
+            ) {
+              $("#update_state").removeClass("disabled");
+            } else {
+              $("#update_state").addClass("disabled");
+            }
+          }
+        );
+        $("#update_state").click((e) => {
+          workflowID = $("#breadcrumb > li.breadcrumb-item.active > span")
+            .text()
+            .replace("جلسات المبيعات #", "");
+          console.log(workflowID);
+
+          $.ajax({
+            url: `/v2/api/entity/le_custom_data_le_workflow-type-entity-3/list/1?filter[reference_id]=${workflowID}`,
+            type: "GET",
+            success: (data) => {
+              let id = data.data[0].id;
+              let updatedData = {
+                link_record: $(
+                  "#le_workflow-type-entity-3_custom_data-link_record"
+                ).val(),
+
+                status: "Inactive",
+              };
+
+              console.log(id, updatedData);
+
+              $.ajax({
+                url: `/v2/api/entity/le_custom_data_le_workflow-type-entity-3/${id}/fields`,
+                type: "POST",
+                headers: {
+                  Accept: "application/json",
+                  "Content-Type": "application/json",
+                },
+                data: JSON.stringify(updatedData),
+                success: (resp) => {
+                  console.log("Success Update Id " + id);
+                  window.location.href = `/v2/owner/workflow/update_status/le_workflow-type-entity-3/${workflowID}/-2`;
+                  //  location.reload();
+                },
+                error: (e) => {
+                  console.log(e);
+                  res(e);
+                },
+              });
+            },
+            error: (err) => {
+              res(false);
+            },
+          });
+
+          let updatedData = {};
+          // $.ajax({
+          //   url: `/v2/api/entity/le_custom_data_le_workflow-type-entity-3/list/1?filter[reference_id]=workflowID`,
+          //   type: "GET",
+          // });
+        });
+      }
+      console.log(aClosed.text());
+    });
+  });
+</script>

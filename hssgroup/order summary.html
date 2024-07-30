@@ -4,9 +4,11 @@
       <div class="mb-5">
         <div class="d-flex align-items-center text-primary mb-2">
           <i class="fas fa-receipt fs-22 mr-2"></i>
-          <h3 class="font-weight-bold fs-lg-24 fs-18 mb-0 mr-2">الأوردر</h3>
+          <h3 class="font-weight-bold fs-lg-24 fs-18 mb-0 mr-2">
+            Order Summary
+          </h3>
           <small class="fs-14 fs-lg-16 font-weight-medium text-body"
-            >({{itemsCount}} البنود)</small
+            >({{itemsCount}} Items)</small
           >
         </div>
         <div class="table-responsive">
@@ -17,25 +19,25 @@
                   scope="col"
                   class="text-primary fs-14 fs-lg-16 font-weight-bold"
                 >
-                  البند
+                  Item
                 </th>
                 <th
                   scope="col"
-                  class="d-none d-md-table-cell text-primary fs-14 fs-lg-16 font-weight-bold"
+                  class="d-none text-primary fs-14 fs-lg-16 font-weight-bold"
                 >
-                  السعر
+                  Price
                 </th>
                 <th
                   scope="col"
-                  class="d-none d-md-table-cell text-primary fs-14 fs-lg-16 font-weight-bold"
+                  class="d-md-celltable text-primary fs-14 fs-lg-16 font-weight-bold"
                 >
-                  الكمية
+                  Qty.
                 </th>
                 {{#hasDiscounts}}
                 <th
                   scope="col"
                   width="170"
-                  class="text-primary fs-14 fs-lg-16 font-weight-bold"
+                  class="d-none text-primary fs-14 fs-lg-16 font-weight-bold"
                 >
                   Discount
                 </th>
@@ -43,15 +45,15 @@
                 <th
                   scope="col"
                   width="170"
-                  class="text-primary fs-14 fs-lg-16 font-weight-bold"
+                  class="text-primary d-none fs-14 fs-lg-16 font-weight-bold"
                 ></th>
                 {{/hasDiscounts}}
                 <th
                   scope="col"
                   width="100"
-                  class="text-primary text-right fs-14 fs-lg-16 font-weight-bold"
+                  class="d-none text-primary text-right fs-14 fs-lg-16 font-weight-bold"
                 >
-                  إجمالي الفاتورة
+                  Subtotal
                 </th>
               </tr>
             </thead>
@@ -82,59 +84,47 @@
                     </div>
                   </div>
                 </td>
-                <td class="d-none d-md-table-cell">
+                <td class="d-none">
                   <span class="fs-16 font-weight-medium text-primary"
                     >{{formatted_price}}</span
                   >
                 </td>
                 <td class="d-none d-md-table-cell">
-                  <span class="fs-16 font-weight-medium text-primary qty-order"
+                  <span class="fs-16 font-weight-medium text-primary"
                     >{{quantity}}</span
                   >
                 </td>
                 {{#hasDiscounts}}
                 <td>
-                  <span class="fs-16 font-weight-medium text-primary"
+                  <span class="fs-16 d-none font-weight-medium text-primary"
                     >{{final_discount}}</span
                   >
                 </td>
                 {{/hasDiscounts}} {{^hasDiscounts}}
                 <td>
-                  <span class="fs-16 font-weight-medium text-primary"></span>
+                  <span
+                    class="fs-16 d-none font-weight-medium text-primary"
+                  ></span>
                 </td>
                 {{/hasDiscounts}}
                 <td class="text-right">
-                  <span class="fs-16 font-weight-medium text-primary"
+                  <span class="fs-16 d-none font-weight-medium text-primary"
                     >{{formatted_subtotal}}</span
                   >
                 </td>
               </tr>
               {{/items}}
               <tr>
-                <td class="border-top-0"></td>
-                <td class="d-none d-md-table-cell border-top-0"></td>
-                <td class="d-none d-md-table-cell border-top-0"></td>
-                <td class="border-top-0 py-1">
-                  <span class="fs-14 fs-lg-16 font-weight-medium text-body"
-                    >اجمالي الكميات:</span
-                  >
-                </td>
-                <td class="text-right border-top-0 py-1">
-                  <span class="fs-16 font-weight-bold text-primary total-qty"
-                    ></span
-                  >
-                </td>
-              </tr>
-              <tr>
                 <td></td>
                 <td class="d-none d-md-table-cell"></td>
                 <td class="d-none d-md-table-cell"></td>
                 <td class="pb-1">
-                  <span class="fs-14 fs-lg-16 font-weight-medium text-body"></span>
-                    إجمالي الفاتورة:</span
+                  <span
+                    class="d-none fs-14 fs-lg-16 font-weight-medium text-body"
+                    >Subtotal:</span
                   >
                 </td>
-                <td class="text-right pb-1">
+                <td class="text-right pb-1 d-none">
                   <span class="fs-16 font-weight-bold text-primary"
                     >{{formatted_subtotals}}</span
                   >
@@ -146,12 +136,13 @@
                 <td class="d-none d-md-table-cell border-top-0"></td>
                 <td class="d-none d-md-table-cell border-top-0"></td>
                 <td class="border-top-0 py-1">
-                  <span class="fs-14 fs-lg-16 font-weight-medium text-body"
+                  <span
+                    class="d-none fs-14 fs-lg-16 font-weight-medium text-body"
                     >Discount:</span
                   >
                 </td>
                 <td class="text-right border-top-0 py-1">
-                  <span class="fs-16 font-weight-bold text-primary"
+                  <span class="d-none fs-16 font-weight-bold text-primary"
                     >{{discounts}}</span
                   >
                 </td>
@@ -194,7 +185,7 @@
               <div class="d-flex align-items-center text-primary mb-2">
                 <i class="fas fa-shipping-fast fs-22 mr-2"></i>
                 <h3 class="font-weight-bold fs-lg-24 fs-18 mb-0 mr-2">
-                  طريقة الشحن (هتستلم ازاي)
+                  Select Shipping Option
                 </h3>
               </div>
               <div class="table-responsive">
@@ -257,8 +248,7 @@
                       <td class="border-top-0 py-1 text-nowrap">
                         <span
                           class="fs-14 fs-lg-16 font-weight-medium text-body mr-4"
-                        >
-                          قيمة الشحن:</span
+                          >Shipping Fees:</span
                         >
                       </td>
                       <td class="text-right border-top-0 py-1">
@@ -294,10 +284,10 @@
         </div>
         <div class="col-lg-6">
           <div class="mb-6">
-            <div class="d-flex align-items-center text-primary mb-2">
+            <div class="d-none align-items-center text-primary mb-2">
               <i class="fas fa-money-bill-wave fs-22 mr-2"></i>
               <h3 class="font-weight-bold fs-lg-24 fs-18 mb-0 mr-2">
-                اجمالي الفاتورة بالتوصيل:
+                Total Amount:
               </h3>
             </div>
             <div class="table-responsive">
@@ -310,11 +300,11 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
+                  <tr class="d-none">
                     <td class="border-top-0"></td>
                     <td class="border-top-0 align-middle pt-2 pb-1 text-nowrap">
                       <span class="fs-16 font-weight-medium text-body mr-4"
-                        >اجمالي الفاتورة بالتوصيل:</span
+                        >Total Amount:</span
                       >
                     </td>
                     <td class="text-right border-top-0 pt-2 pb-1">
@@ -350,7 +340,7 @@
             href="/contents/products_list"
             class="text-hover-primary mt-2 mt-lg-0 d-inline-block font-weight-medium"
             ><span class="text-decoration-underline"
-              ><i class="fas fa-arrow-left mr-1"></i> العودة للتسوق</span
+              ><i class="fas fa-arrow-left mr-1"></i>Back to shopping</span
             ></a
           >
         </div>
@@ -360,7 +350,7 @@
             href="#"
             class="btn btn-success d-flex align-items-center justify-content-between rounded-lg btn-block px-6 py-3 fs-20 font-weight-medium btn-lg"
           >
-            <span>تأكيد عملية الشراء</span>
+            <span>Place Order</span>
             <span class="fas fa-arrow-right fs-16"></span>
           </a>
         </div>
@@ -370,19 +360,7 @@
 </div>
 <script>
   // Do not remove these, they are used in another file
-  let all_system_taxes = JSON.parse('{{{all_taxes}}}');
-  let item_taxes = Object.values(JSON.parse('{{{totalTaxes}}}'));
+  let all_system_taxes = JSON.parse("{{{all_taxes}}}");
+  let item_taxes = Object.values(JSON.parse("{{{totalTaxes}}}"));
 </script>
 <script src="/shop_front/js/order-summary.js"></script>
-    <script>
-       $(document).ready(()=>{
-        let qty = 0
-
-$.each($(".qty-order"),(i,val)=>{
-  let rowQty = parseFloat($(val).text())
-  qty +=rowQty
-  console.log($(val).text());
-})
-$(".total-qty").text(qty)
-       })
-    </script>

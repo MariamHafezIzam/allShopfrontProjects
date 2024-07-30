@@ -18,7 +18,7 @@
     }
 
     #new_Price-desktop {
-      text-align: right;
+      text-align: center;
       padding-right: 12%;
       height: 70px;
       font-weight: bold;
@@ -35,6 +35,10 @@
       display: none;
       align-items: center;
       justify-content: center;
+    }
+    .product {
+      border: none !important;
+      box-shadow: none !important;
     }
   </style>
   <div class="pt-8" style="margin-bottom: 35px">
@@ -164,6 +168,46 @@
               {{/product.has_discount}}
             </div>
             <div
+              class="product d-flex align-items-center"
+              data-product-id="{{ product.id }}"
+              data-image="{{ product_images.0 }}"
+              data-price="{{ product.final_price_number }}"
+              data-name="{{ product.name }}"
+            >
+              <div
+                class="input-group col cart-item-count px-0 px-lg-6 mr-2 mr-lg-0"
+              >
+                <div class="input-group-prepend">
+                  <button
+                    type="button"
+                    style="background-color: #5bb0ba; border-radius: 5px"
+                    class="far fa-minus d-inline-flex align-items-center justify-content-center fs-13 w-38px w-lg-42px h-38px h-lg-42px btn p-0 btn-placeholder d-inline-block minus"
+                  ></button>
+                </div>
+                <input
+                  type="text"
+                  class="form-control border-placeholder text-center w-38px w-lg-42px h-38px h-lg-42px p-0 qty"
+                  value="1"
+                  max="999"
+                  min="1"
+                  step="1"
+                />
+                <div class="input-group-append">
+                  <button
+                    type="button"
+                    style="background-color: #5bb0ba; border-radius: 5px"
+                    class="far fa-plus d-inline-flex align-items-center justify-content-center fs-13 w-38px w-lg-42px h-38px h-lg-42px btn p-0 btn-placeholder d-inline-block plus"
+                  ></button>
+                </div>
+              </div>
+              <button
+                style="border-radius: 13px"
+                class="add-to-cart-btn btn btn-sm btn-primary text-uppercase font-weight-medium fs-16"
+              >
+                <i class="fal fa-cart-plus mr-2"></i>اضافة الي العربة
+              </button>
+            </div>
+            <!-- <div
               class="d-flex align-items-center"
               data-product-id="{{ product.id }}"
               data-image="{{ product_images.0 }}"
@@ -202,10 +246,10 @@
               >
                 <i class="fal fa-cart-plus mr-2"></i>اضافة الي العربة
               </button>
-            </div>
+            </div> -->
           </div>
           <div
-            class="fs-32  font-weight-bold price"
+            class="fs-32 font-weight-bold price pt-4"
             id="new_Price-desktop"
           ></div>
           <div
@@ -218,24 +262,32 @@
     </div>
   </div>
   <script>
-    var settings = {
+    var settingsProduct = {
       method: "GET",
       headers: {
-        APIKEY: "2b0750639236167532feb564896822d54096eff8",
+        APIKEY: "d04b28d5fbb054bef67e96994d9a3fec7ade4e0f",
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    };
+    var settingsClient = {
+      method: "GET",
+      headers: {
+        APIKEY: "7ba248d722bc0c9928f24fb3782847669c0f6d01",
         "Content-Type": "application/json",
         Accept: "application/json",
       },
     };
 
     if (USER.client_id != 0) {
-      settings.url = `https://www.elshoroukshop.online/v2/api/entity/client/${USER.client_id}`;
+      settingsClient.url = `https://www.elshoroukshop.online/v2/api/entity/client/${USER.client_id}`;
     }
-    $.ajax(settings)
+    $.ajax(settingsClient)
       .then((client) => {
-        settings.url = `https://www.elshoroukshop.online/v2/api/entity/product/${
+        settingsProduct.url = `https://www.elshoroukshop.online/v2/api/entity/product/${
           window.location.href.split("/")[5]
         }`;
-        $.ajax(settings).then((product) => {
+        $.ajax(settingsProduct).then((product) => {
           console.log(product);
           if (product.description) {
             let desc = product.description.split("\r\n");
@@ -253,10 +305,10 @@
           if (client.custom_data.field_91 == "ديلر") {
             document.querySelector(
               "#new_Price-desktop"
-            ).innerText = `${product.custom_data.field_92}`;
+            ).innerHTML = `سعر الجملة <br>${product.custom_data.field_92} `;
             document.querySelector(
               "#new_Price-mobile"
-            ).innerText = `${product.custom_data.field_92}`;
+            ).innerHTML = `${product.custom_data.field_92}<br> سعر الجملة`;
           }
         });
       })

@@ -132,7 +132,37 @@
   .swiper-container-rtl .swiper-button-prev {
     right: 90% !important;
   }
+
+  .loader {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background: #ffffff;
+    z-index: 150;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s;
+  }
+
+  .loader .spinner-border {
+    transition: all 0.3s;
+  }
+  .bg-cat {
+    height: 400px;
+  }
+  @media only screen and (max-width: 991px) {
+    .swiper-button-prev {
+      margin-right: -50px !important;
+    }
+    .bg-cat {
+      height: 115px;
+    }
+  }
 </style>
+
 <div class="container py-4">
   <h1 class="text-dark text-center fs-30 fs-lg-40 page-name"></h1>
 </div>
@@ -144,7 +174,7 @@
       <div class="col-lg-12 px-0 px-lg-3">
         {{#Category.image_full_path}}
         <div
-          class="py-22 px-14 bg-placeholder text-center text-lg-left bg-cover bg-center"
+          class="bg-cat px-14 bg-placeholder text-center text-lg-left bg-cover bg-center"
           style="background-image: url({{Category.image_full_path}})"
         ></div>
         {{/Category.image_full_path}} {{^Category.image_full_path}}
@@ -157,7 +187,10 @@
   </div>
 
   {{#categories_count}}
-  <div id="home-categories-section" class="pt-7">
+  <div id="home-categories-section" class="pt-7" style="position: relative">
+    <!-- <div class="loader">
+      <div class="spinner-border"></div>
+    </div> -->
     <div class="container pt-7">
       <div
         style="position: relative; width: 100%; height: 40px; margin-top: -60px"
@@ -170,13 +203,14 @@
         </div>
       </div>
       <div class="">
-        <div class="swiper mySwiper swiper-cat">
+        <div id="swiper-cat" class="swiper mySwiper swiper-cat">
           <div class="swiper-wrapper">
             {{#categories}}
             <div
+              id="{{id}}"
               class="swiper-slide col-lg-3 col-6 col py-2 px-lg-4 px-1 card-product box"
             >
-              <div class="cat-card">
+              <div class="cat-card" data-id="{{id}}">
                 <div class="text-center mb-6 mb-lg-0">
                   {{#image_full_path}}
                   <img src="{{image_full_path}}" class="cat-img" />
@@ -229,7 +263,7 @@
   <div class="container">
     <div class="row">
       <div class="py-22 px-14 text-center">
-        <h1 class="text-dark fs-30 fs-lg-40">{{query}}</h1>
+        <h1 class="text-dark fs-30 fs-lg-40 titlllle">{{query}}</h1>
       </div>
     </div>
   </div>
@@ -237,6 +271,7 @@
 {{/query}}
 <div id="products-section" class="pb-4">
   <div class="container">
+    {{#products_count}}
     <div class="row">
       <div class="col-lg-12">
         <div class="pt-8 soring-price">
@@ -322,6 +357,7 @@
         <div class="border-top border-placeholder pb-8"></div>
       </div>
     </div>
+    {{/products_count}}
     <div class="row" id="all-products">
       {{#products}}
 
@@ -390,7 +426,7 @@
         </div>
       </div>
       {{/products}} {{^products_count}}
-      <p>لا يوجد منتجات</p>
+      <!-- <p>لا يوجد منتجات</p> -->
       {{/products_count}}
     </div>
     {{#products_count}}
@@ -435,20 +471,58 @@
 </div>
 <script>
   $(document).ready(() => {
+    let title = $(".titlllle").text();
+    if (title.includes('No Results Matches')) {
+      $(".titlllle").text("هذا المنتج نفذ من على المتجر ");
+    }
+    // let cats = $(
+    //   "#home-categories-section .swiper-cat .swiper-wrapper .card-product"
+    // );
+
+    // $.each(cats, (i, val) => {
+    //   let catId = $(val).find(".cat-card").data("id");
+    //   console.log(catId);
+
+    //   $.ajax({
+    //     type: "GET",
+    //     url: "/v2/api/entity/category/" + catId,
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //       Accept: "application/json",
+    //       APIKEY: "eca5f677185bdbdb49f89fcc4ac9bf108cf76e90",
+    //     },
+    //     credentials: "same-origin",
+    //     contentType: "application/json",
+    //   }).done((data) => {
+    //     console.log(data);
+    //     let itemsCat = data.items_categories.length;
+    //     console.log(itemsCat);
+    //   });
+    // });
+
     let url = window.location.href;
     if (url.includes("modified")) {
-      $(".page-name").text("وصل حديثا");
+      //  $(".page-name").text("وصل حديثا");
       $(".soring-price").addClass("d-none");
     } else if (
-      url.includes(
-        "/contents/products_list/limit:100/sort:stock_balance/direction:desc"
-      )
+      url.includes("s/products_list/limit:100") &&
+      !url.includes("cat_id=")
     ) {
       $(".page-name").text("كل المنتجات");
     } else {
       console.log(url.includes("modified"));
     }
-
+    console.log();
+    if (
+      url.includes(
+        "https://www.elshoroukshop.online/contents/products_list/limit:100"
+      ) &&
+      !url.includes("sort:name") &&
+      !url.includes("modified")
+    ) {
+      console.log("rrr");
+      window.location = url.replace("?", "/sort:name?");
+    }
     // if (!url.includes("limit") && url.includes("cat_id=")) {
     //   let newUrl = url.split("?");
     //   window.location = `${newUrl[0]}/limit:100?${newUrl[1]}`;
@@ -491,28 +565,45 @@
     // );
     var referrer = document.referrer;
 
-    if (
-      referrer == "https://www.elshoroukshop.online/home" &&
-      window.location.href.includes("modified")
-    ) {
-      console.log("recent page");
-      $(".page-link").each((pLink) => {
-        $(".page-link")
-          .eq(pLink)
-          .attr(
-            "href",
-            $(".page-link")
-              .eq(pLink)
-              .attr("href")
-              .replace("/sort:stock_balance/direction:desc", "") +
-              "/sort:modified/direction:desc"
-          );
-      });
-    }
+    // if (
+    //   referrer == "https://www.elshoroukshop.online/home" &&
+    //   window.location.href.includes("modified")
+    // ) {
+    //   console.log("recent page");
+    //   $(".page-link").each((pLink) => {
+    //     $(".page-link")
+    //       .eq(pLink)
+    //       .attr(
+    //         "href",
+    //         $(".page-link")
+    //           .eq(pLink)
+    //           .attr("href")
+    //           .replace("/sort:stock_balance/direction:desc", "") +
+    //           "/sort:modified/direction:desc"
+    //       );
+    //   });
+    // }
     setTimeout(() => {
-      var swiper = new Swiper(".swiper-cat", {
-        slidesPerView: 3,
-        spaceBetween: 0,
+      var swiper = new Swiper("#swiper-cat", {
+        slidesPerView: 4,
+        freeMode: true,
+
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
+        },
+        autoplay: {
+          delay: 2000,
+          disableOnInteraction: false,
+        },
+        breakpoints: {
+          640: {
+            slidesPerView: 2,
+          },
+          1400: {
+            slidesPerView: 4,
+          },
+        },
         navigation: {
           nextEl: ".swiper-button-prev",
           prevEl: ".swiper-button-next",
@@ -531,6 +622,28 @@
         $("#all-products .card-product").eq(pro).addClass("d-none");
       }
     });
+
+    // let cat = $(".swiper-cat .swiper-slide");
+    // $.each(cat, (i, val) => {
+    //   let id = $(val).attr("id");
+    //   console.log($(val).attr("id"));
+    //   $.ajax({
+    //     url: `/contents/products_list/limit:100/sort:name/direction:asc?cat_id=${id}`,
+    //     type: "get",
+    //     success: function (resp) {
+    //       let catLength = $(resp).find("#all-products .col-lg-3").length;
+    //       console.log($(resp).find("#all-products .col-lg-3").length, id);
+    //       if (catLength == 0) {
+    //         id = parseFloat(id);
+    //         $(`#${id}`).hide();
+    //       }
+    //       // $(resp).find("#all-products .col-lg-3").length();
+    //     },
+    //   });
+    // });
+    // setTimeout(() => {
+    //   $(".loader").hide();
+    // }, 4000);
 
     // $("#filter").append(`<option value="name">الإسم</option>`);
 

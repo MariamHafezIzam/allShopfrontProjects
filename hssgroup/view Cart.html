@@ -5,7 +5,7 @@
         type="button"
         class="cart-toggle-btn btn p-0 font-weight-semibold d-inline-flex align-items-center fs-16 text-dark text-hover-primary"
       >
-        <i class="fas fa-arrow-circle-left mr-2 fs-18"></i> السلة
+        <i class="fas fa-arrow-circle-left mr-2 fs-18"></i>عربة التسوق
       </button>
     </div>
     <div class="side-sidebar-body my-5">
@@ -35,7 +35,7 @@
                 class="mt-2 d-flex align-items-center justify-content-between"
               >
                 <span
-                  class="text-alto font-weight-semibold cart-item-price"
+                  class="d-none text-alto font-weight-semibold cart-item-price"
                 ></span>
                 <div class="cart-item-count">
                   <button
@@ -47,7 +47,6 @@
                     class="form-control qty cart-item-qty"
                     min="1"
                     step="1"
-                    disabled
                   />
                   <button
                     class="btn p-0 fas fa-plus-circle fs-16 text-alto text-hover-primary plus"
@@ -60,39 +59,22 @@
       </div>
       <div class="empty-cart-text"></div>
       <div class="cart-subtotal">
-        <span class="font-weight-medium text-dark mr-3">اجمالي عدد القطع</span>
-        <!-- <span class="font-weight-medium text-dark mr-3 qty-subtotal">
+        <span class="font-weight-medium text-dark mr-3 qty-subtotal">
           إجمالى ({{cart_items_count}} منتجات)
-        </span> -->
-        <span class="cart-total font-weight-bold text-primary fs-24"> </span>
+        </span>
+        <span class="d-none cart-total font-weight-bold text-primary fs-24">
+        </span>
       </div>
     </div>
     <div class="side-sidebar-footer">
-      <button
-        id="checkout-fakeBtn"
-        class="btn btn-primary d-flex align-items-center justify-content-between btn-block px-4 py-3 text-uppercase fs-16 font-weight-medium btn-lg mt-auto"
-      >
-        <span>اضغط هنا للانتقال للصفحة النهائية </span>
-        <span class="fas fa-arrow-square-right"></span>
-      </button>
       <a
         id="checkout-btn"
         href="/client/contents/order_summary"
-        class="disabled d-none btn btn-primary align-items-center justify-content-between btn-block px-4 py-3 text-uppercase fs-16 font-weight-medium btn-lg mt-auto"
+        class="disabled btn btn-primary d-flex align-items-center justify-content-between btn-block px-4 py-3 text-uppercase fs-16 font-weight-medium btn-lg mt-auto"
       >
-        <span>اضغط هنا للانتقال للصفحة النهائية </span>
+        <span>الدفع</span>
         <span class="fas fa-arrow-square-right"></span>
       </a>
     </div>
   </div>
 </div>
-<script>
-  $(document).ready(() => {
-    console.log($(".cart-items").text().trim());
-    if ($(".cart-items").text().trim() == "") {
-      $("#checkout-fakeBtn").addClass("disabled");
-    } else {
-      console.log("DFGHJKJHGFDSDFGHJ");
-    }
-  });
-</script>
