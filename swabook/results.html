@@ -1,0 +1,148 @@
+<div class="container py-5">
+  <div class="tab-container">
+    <!-- Tab buttons -->
+    <div class="tab-buttons">
+      <button class="tab-button active" onclick="openTab(event, 'reserve')">
+        Reserve
+      </button>
+      <button class="tab-button" onclick="openTab(event, 'buy')">Buy</button>
+    </div>
+
+    <!-- Tab content -->
+    <div class="tab-content active" id="reserve">
+      <h2>Reserve</h2>
+      <p>
+        This is the content for reserving. Users can select dates and reserve
+        items here.
+      </p>
+    </div>
+
+    <div class="tab-content" id="buy">
+      <h2>Buy</h2>
+      <p>
+        This is the content for buying. Users can purchase items directly here.
+      </p>
+    </div>
+  </div>
+
+  <div class="row">
+    <!-- Search Results Column (2/3 width) -->
+    <div class="col-md-12" id="hotels"></div>
+  </div>
+</div>
+
+<script>
+  $(document).ready(() => {
+    var stars;
+    var locationData = location.href.split("?")[1];
+    const decodedStr = decodeURIComponent(locationData);
+    console.log(decodedStr);
+    const filters = decodedStr.split("&");
+    // To get the values, loop over the array and split each item by the '=' sign
+    const values = {};
+    filters.forEach((item) => {
+      const [key, value] = item.split("="); // Split by '=' to get the key and value
+      values[key] = value; // Store them in an object with key-value pairs
+    });
+
+    // Now you can access each value
+    console.log(values.destination);
+    console.log(values.start_date);
+    console.log(values.end_date);
+    console.log(values.adults);
+    console.log(values.childrens);
+    console.log(values.client_code);
+
+    var hotelsArr = [];
+    $.ajax({
+      url: `/v2/api/entity/le_hotels_list/list/1?filter[area_ar]=${values.destination}`,
+      method: "GET",
+      headers: {
+        apikey: "37826bf65322f99c09757d1e0956827d45314da6",
+      },
+      success: function (response) {
+        console.log(response);
+        const hotelsData = response.data;
+        for (let i = 0; i < hotelsData.length; i++) {
+          hotelsArr.push({
+            id: hotelsData[i].id,
+            name: hotelsData[i].name_ar,
+          });
+        }
+        return hotelsArr;
+      },
+      error: function (error) {
+        console.error(error);
+      },
+    }).then((data) => {
+      const hotels = data.data;
+      hotels.forEach((hotel) => {
+        $.ajax({
+          url: `/v2/api/entity/le_hotels_list/${hotel.id}/4`,
+          method: "GET",
+          headers: {
+            apikey: "37826bf65322f99c09757d1e0956827d45314da6",
+          },
+          success: function (response) {
+            console.log(response);
+            const hotelName = response.name_ar;
+            const hotelDesc = response.desc_ar;
+            const hotelRating = response.stars_category_ar;
+            const hotelRatingTitle = response.guest_rating_ar;
+            stars;
+            if (hotelRating == "5 نجوم") {
+              stars = "★★★★★";
+            } else if (hotelRating == "4 نجوم") {
+              stars = "★★★★";
+            } else if (hotelRating == "3 نجوم") {
+              stars = "★★★";
+            } else if (hotelRating == "نجمتان") {
+              stars = "★★";
+            } else if (hotelRating == "نجمة") {
+              stars = "★";
+            } else {
+              stars = "بدون تقييم";
+            }
+            let firstImg;
+            if (
+              response.le_hotels_list_le_hotels_list_images[0]
+                .le_hotels_list_images_image
+            ) {
+              firstImg =
+                response.le_hotels_list_le_hotels_list_images[0]
+                  .le_hotels_list_images_image.path;
+            } else {
+              firstImg = "";
+            }
+            console.log(firstImg);
+            $("#hotels").append(`<div class="col-md-6 col-lg-12 mb-4 card">
+                  <div class="row">
+                    <div class="col-md-4 p-2">
+                      <div class="card-image m-2">
+                        <img src="s3/${firstImg}" alt="Hotel Image" style="width:200px">
+                      </div>
+                    </div>
+
+                    <div class="col-md-8 card-body">
+                      <h5 class="card-title mb-3 text-primary medium">${hotelName}</h5>
+                      <p class="card-text"> ${hotelDesc}
+                      </p>
+                      <div class="d-flex justify-content-between align-items-center mb-2">
+                        <div class="star-rating">
+                          <span class="text-warning" id="stars">${stars} (${hotelRatingTitle})</span>
+                          <small></small>
+                        </div>
+                      </div>
+                      <a href="/contents/process_content/hotel?hotel=${hotel.id}&${locationData}" style="justify-self: left" class="btn btn-primary btn-block w-auto">احجز الآن</a>
+                    </div>
+                  </div>
+                </div>`);
+          },
+          error: function (error) {
+            console.error(error);
+          },
+        });
+      });
+    });
+  });
+</script>
